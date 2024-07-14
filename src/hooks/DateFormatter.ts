@@ -1,7 +1,7 @@
 const DateFormatter = (dateString: string|number) => {
     const formatDate = (date: Date) => {
         const now = new Date();
-        const diffTime = Math.abs(now - date);
+        const diffTime = Math.abs(now.getTime() - date.getTime());
         const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365));
         const diffMonths = Math.floor((diffTime % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
         const diffDays = Math.floor((diffTime % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));

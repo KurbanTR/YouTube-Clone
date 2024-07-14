@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import logo from '../assets/logo.svg'
 import search from '../assets/search.svg'
 import { useEffect, useState } from "react"
@@ -12,7 +12,7 @@ const Header = () => {
 
     const nav = useNavigate()
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
     };
 
@@ -20,7 +20,7 @@ const Header = () => {
         if(searchQuery) setQuery(searchQuery)
     },[searchQuery])
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         if(query.trim() !== ''){
             nav(`/result?search_query=${query}`)

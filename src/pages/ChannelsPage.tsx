@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchChannelById, fetchChannelVideos } from "../app/searchSlice"; // Используем правильный экспорт
 import useNumberFormatter from "../hooks/useNumberFormatter";
 import DateFormatter from "../hooks/DateFormatter";
@@ -32,18 +32,22 @@ interface Channel {
 
 interface VideoItem {
   id: {
-    videoId?: string;
-    playlistId?: string;
+      kind: string;
+      videoId?: string;
+      playlistId?: string;
+      channelId?: string;
   };
   snippet: {
-    title: string;
-    thumbnails: {
-      medium: {
-        url: string;
-        width: number;
-        height: number;
+      title: string;
+      channelId: string;
+      channelTitle: string;
+      publishTime: string;
+      description: string;
+      thumbnails: {
+          medium: {
+              url: string;
+          };
       };
-    };
   };
 }
 
