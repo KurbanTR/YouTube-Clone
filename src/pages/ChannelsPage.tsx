@@ -116,7 +116,7 @@ const ChannelsPage = () => {
       <div className="my-12 450res:my-5 h-[1px] bg-[#aaaaaa]" />
       <div className={`grid grid-cols-4 500res:grid-cols-1 700res:grid-cols-2 1200res:grid-cols-3 gap-4`}>
         {channelVideos?.map((item) => (
-          <CardVideo item={item}/>
+          <CardVideo item={item} type="video"/>
         ))}
       </div>
     </div>
