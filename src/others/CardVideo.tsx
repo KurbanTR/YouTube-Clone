@@ -22,9 +22,10 @@ interface VideoItem {
 
 interface CardVideoProps {
     item: VideoItem;
+    type: string;
 }
 
-const CardVideo: React.FC<CardVideoProps> = ({ item }) => {
+const CardVideo: React.FC<CardVideoProps> = ({ item, type }) => {
     const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
 
     const myElementRef = useRef<HTMLDivElement>(null);
@@ -45,7 +46,8 @@ const CardVideo: React.FC<CardVideoProps> = ({ item }) => {
         setActiveVideoId(null);
     };
 
-    const videoId = item.id.videoId || item.id.playlistId;
+    const videoId = item.id.videoId
+    const playlistId = item.id.playlistId      
 
     return (
         <div 
@@ -53,12 +55,12 @@ const CardVideo: React.FC<CardVideoProps> = ({ item }) => {
             onMouseLeave={handleMouseLeave}
             className='cursor-pointer'
         >
-            <Link to={`/watch?v=${videoId}`}>
+            <Link to={type == 'video' ? `/watch?v=${videoId}` : `playlist?list=${playlistId}`}>
                 <div 
                     className='rounded-2xl 1580res:rounded-xl 1000res:rounded-md overflow-hidden'
                     style={{height: elementHeight}}
                 >
-                    {activeVideoId === videoId ?
+                    {(activeVideoId === videoId && type == 'video') ?
                         <iframe
                             frameBorder="0"
                             allowFullScreen

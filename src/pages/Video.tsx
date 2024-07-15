@@ -32,7 +32,7 @@ interface VideoItem {
             };
         };
     };
-  }
+}
 
 const Video = () => {
     const { cardWidth, cardHeight } = useCardSize();
@@ -56,7 +56,7 @@ const Video = () => {
 
     return (
         <div className="flex justify-center">
-            <div className={`flex gap-[1vw] w-[1440px] 1480res:w-[95%] 1000res:flex-col`}>
+            <div className={`flex gap-x-[1vw] gap-y-[3vw] w-[1440px] 1480res:w-[95%] 1000res:flex-col`}>
                 <div className="flex flex-col gap-y-[.8vw]">
                     <div style={window.innerWidth >= 1480 ? {width: '62em', height: '39em'} : (window.innerWidth <= 1000 ? {width: '95vw', height: '50vw'} : {width: cardWidth * 2, height: cardHeight * 2})}>
                         <iframe
@@ -72,16 +72,16 @@ const Video = () => {
                         />
                     </div>
                     <div className="text-white font-[550]">
-                        <h2 className="text-[1.2em] 1480res:text-[1.6vw] 1000res:text-[1.8vw]">{video?.snippet?.title}</h2>
-                        <Link to={`/channels/${video?.snippet?.channelId}`} className="text-[1em] 1480res:text-[1.3vw] 1000res:text-[1.7vw]">{video?.snippet?.channelTitle}</Link>
+                        <h2 className="text-[1.7em] 1480res:text-[2vw] 1000res:text-[2.5vw] 500res:text-[3vw] 500res:relative 500res:top-2">{video?.snippet?.title}</h2>
+                        <Link to={`/channels/${video?.snippet?.channelId}`} className="text-[1.5em] 1480res:text-[1.5vw] 1000res:text-[2vw] 500res:text-[2.7vw]">{video?.snippet?.channelTitle}</Link>
                     </div>
                 </div>
                 <div className="w-full flex flex-col gap-4">
                     {videos?.map((item, index) => (
                         item?.id?.kind !== 'youtube#channel' && (
                             <Link to={`/watch?v=${item?.id?.videoId || item?.id?.playlistId}`} key={index}>
-                                <div className="flex gap-5">
-                                    <div className="w-[50%]">
+                                <div className="flex gap-5 500res:gap-3">
+                                    <div className="w-[50%] 1000res:w-1/3 500res:w-1/2">
                                         <img
                                             src={item?.snippet?.thumbnails?.medium?.url}
                                             style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
@@ -90,8 +90,8 @@ const Video = () => {
                                         />
                                     </div>
                                     <div className="w-[75%]">
-                                        <h3 className="text-[.8vw] font-[550] text-white">{item.snippet.title.slice(0, 40)}</h3>
-                                        <div className='text-[.6vw]'>
+                                        <h3 className="text-[.8vw] 1000res:text-[2vw] 500res:text-[2.5vw] font-[550] text-white">{item.snippet.title}</h3>
+                                        <div className='text-[.6vw] 1000res:text-[1.7vw] 500res:text-[2.2vw]'>
                                             <h4>{DateFormatter(item?.snippet?.publishTime)}</h4>
                                             <Link to={`/channels/${item?.snippet?.channelId}`} className='hover:text-white'>{item.snippet.channelTitle}</Link>
                                             <h4>{item?.snippet?.description}</h4>

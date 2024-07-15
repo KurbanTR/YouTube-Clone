@@ -3,6 +3,7 @@ import { instance } from './instance';
 type Params = { 
     id?: string | undefined,
     channelId?: string | undefined,
+    playlistId?: string | undefined,
     q?: string | undefined,
     part?: string | undefined,
     regionCode?: string | undefined,
@@ -24,5 +25,8 @@ export const videoApi = {
     },
     getChannelVideo(params: Params) {
         return instance.get('search', { params });
-    }
+    },
+    getPlaylistItems(params: Params) {
+        return instance.get('playlistItems', { params });
+    },
 };

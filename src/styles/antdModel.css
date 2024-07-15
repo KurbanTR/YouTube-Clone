@@ -1,0 +1,12 @@
+.ant-modal .ant-modal-content {
+    background: black !important;
+}
+.ant-modal .ant-modal-title {
+    background: black !important;
+}
+.ant-modal .ant-modal-close {
+    color: white !important;
+}
+.css-dev-only-do-not-override-98ntnt{
+    margin: 0 !important;
+}

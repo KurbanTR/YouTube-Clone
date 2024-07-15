@@ -120,3 +120,22 @@ export const fetchChannelVideos = async (id: string) => {
         throw error;
     }
 };
+
+export const fetchPleylistVideos = async (id: string) => {
+    try {
+        const response = await videoApi.getPlaylistItems({
+            part: 'snippet',
+            playlistId: id,
+            maxResults: 50,
+        });
+        console.log(response.data.items);
+        return response.data.items;
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error('Error fetching video by ID:', error.message);
+        } else {
+            console.error('Error fetching video by ID:', error);
+        }
+        throw error;
+    }
+};

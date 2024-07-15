@@ -27,7 +27,7 @@ interface VideoItem {
 const MainPage = () => {
   const { data: videos, isLoading, isError, error } = useQuery<{ items: VideoItem[] }>({
     queryKey: ['main'],
-    queryFn: () => fetchVideos(''),
+    queryFn: () => fetchVideos('plagini 1.1.5'),
   });
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const MainPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center h-[85vh]">
         <p className="text-white">Loading...</p>
       </div>
     );
@@ -52,7 +52,7 @@ const MainPage = () => {
 
   if (!videos?.items?.length) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center h-[85vh]">
         <p className="text-white">No videos found</p>
       </div>
     );
@@ -62,9 +62,11 @@ const MainPage = () => {
     <div className="min-h-screen p-4">
       <div className="grid grid-cols-6 2230res:grid-cols-5 1900res:grid-cols-4 1580res:grid-cols-3 1000res:grid-cols-2 gap-[2vw]">
         {videos.items.map((item, index) =>
-          item.id.kind !== 'youtube#channel' ? (
-            <CardVideo item={item} key={index} />
-          ) : null
+          item.id.kind !== 'youtube#channel' && item?.id?.kind !== 'youtube#playlist' ? (
+            <CardVideo item={item} key={index} type='video' />
+          ) : (item?.id?.kind == 'youtube#playlist' ? (
+            <CardVideo item={item} key={index} type='playlist' />
+          ): null)
         )}
       </div>
     </div>
