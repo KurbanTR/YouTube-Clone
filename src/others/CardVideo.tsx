@@ -33,10 +33,10 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type }) => {
 
     useEffect(() => {
         if (myElementRef.current) {
-        const width = myElementRef.current.offsetWidth;
-        setElementHeight(width / 2);
+            const width = myElementRef.current.offsetWidth;
+            setElementHeight(width / 1.9);
         }
-    }, []);
+    }, [myElementRef]);
     
     const handleMouseEnter = (videoId: string) => {
         setActiveVideoId(videoId);
@@ -57,8 +57,9 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type }) => {
         >
             <Link to={type == 'video' ? `/watch?v=${videoId}` : `playlist?list=${playlistId}`}>
                 <div 
-                    className='rounded-2xl 1580res:rounded-xl 1000res:rounded-md overflow-hidden'
-                    style={{height: elementHeight}}
+                    className={`rounded-2xl 1580res:rounded-xl 1000res:rounded-md overflow-hidden h-[${elementHeight}]`}
+                    style={{height: `${elementHeight}px`}}
+                    ref={myElementRef}
                 >
                     {(activeVideoId === videoId && type == 'video') ?
                         <iframe
@@ -78,10 +79,10 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type }) => {
                         />
                     }
                 </div>
-                <h3 className="text-[.8vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.5vw] 1000res:text-[2.5vw] font-[550] text-white">
+                <h3 className="text-[.8vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.5vw] 1000res:text-[2.5vw] 500res:text-[3vw] 500res:pt-2 font-[550] text-white">
                     {item?.snippet?.title.slice(0, 40)}
                 </h3>
-                <div className='text-[.6vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.2vw] 1000res:text-[2.2vw]'>
+                <div className='text-[.6vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.2vw] 1000res:text-[2.2vw] 500res:text-[2.5vw]'>
                     <Link to={`/channels/${item?.snippet?.channelId}`} className='hover:text-white'>
                         {item?.snippet?.channelTitle}
                     </Link>

@@ -60,7 +60,7 @@ const MainPage = () => {
 
   return (
     <div className="min-h-screen p-4">
-      <div className="grid grid-cols-6 2230res:grid-cols-5 1900res:grid-cols-4 1580res:grid-cols-3 1000res:grid-cols-2 gap-[2vw]">
+      <div className="grid grid-cols-6 2230res:grid-cols-5 1900res:grid-cols-4 1580res:grid-cols-3 1000res:grid-cols-2 500res:grid-cols-1 gap-[2vw]">
         {videos.items.map((item, index) =>
           item.id.kind !== 'youtube#channel' && item?.id?.kind !== 'youtube#playlist' ? (
             <CardVideo item={item} key={index} type='video' />
