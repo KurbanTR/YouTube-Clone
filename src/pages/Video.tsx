@@ -15,9 +15,9 @@ interface Video {
         description: string,
     };
     statistics: {
-        viewCount: number,
-        likeCount: number,
-    }
+        viewCount: number | undefined,
+        likeCount: number | undefined,
+    } | undefined
 }
 
 interface VideoItem {
@@ -46,7 +46,7 @@ const Video = () => {
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('v');
 
-    const { data: video } = useQuery<Video>({
+    const { data: video } = useQuery<Video | undefined>({
         queryKey: ['video', { searchQuery }],
         queryFn: () => fetchVideoById(searchQuery || ''),
     });

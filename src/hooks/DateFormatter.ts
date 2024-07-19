@@ -1,4 +1,4 @@
-const DateFormatter = (dateString: string|number) => {
+const DateFormatter = (dateString: string|number|undefined) => {
     const formatDate = (date: Date) => {
         const now = new Date();
         const diffTime = Math.abs(now.getTime() - date.getTime());
