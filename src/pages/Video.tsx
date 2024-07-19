@@ -4,13 +4,20 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useCardSize from "../hooks/useCardSize";
 import DateFormatter from "../hooks/DateFormatter";
+import BigNumber from "../hooks/BigNumber";
 
 interface Video {
     snippet: {
         title: string;
         channelId: string;
         channelTitle: string;
+        publishedAt: string,
+        description: string,
     };
+    statistics: {
+        viewCount: number,
+        likeCount: number,
+    }
 }
 
 interface VideoItem {
@@ -74,6 +81,10 @@ const Video = () => {
                     <div className="text-white font-[550]">
                         <h2 className="text-[1.7em] 1480res:text-[2vw] 1000res:text-[2.5vw] 500res:text-[3vw] 500res:relative 500res:top-2">{video?.snippet?.title}</h2>
                         <Link to={`/channels/${video?.snippet?.channelId}`} className="text-[1.5em] 1480res:text-[1.5vw] 1000res:text-[2vw] 500res:text-[2.7vw]">{video?.snippet?.channelTitle}</Link>
+                    </div>
+                    <div className="bg-[rgba(255,255,255,.1)] rounded-xl text-white p-4 540res:p-2 w-full">
+                        <p className="font-[550] text-[1em] 1480res:text-[1.2vw] 1000res:text-[2.2vw] 500res:text-[2.7vw]">{`${BigNumber(video?.statistics?.viewCount)} просмотров ${DateFormatter(video?.snippet?.publishedAt)}`}</p>
+                        <p className="text-[.8em] 1480res:text-[1vw] 1000res:text-[2vw] 500res:text-[2.5vw]">{video?.snippet?.description}</p>
                     </div>
                 </div>
                 <div className="w-full flex flex-col gap-4">
