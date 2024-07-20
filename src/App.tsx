@@ -11,7 +11,7 @@ const App = () => {
   return (
     <>
       <Header/>
-      <div className='min-h-[11em] 1650res:min-h-[3.75em]'/>
+      <div className='min-h-[11em] 1650res:min-h-[3.5em]'/>
       <Routes>
         <Route path='/' element={<MainPage/>}/>
         <Route path='/result' element={<SearchPage/>}/>

@@ -42,7 +42,7 @@ const Header: React.FC = () => {
     };
 
     return (
-        <header className="fixed w-full z-30 bg-def-black flex justify-center items-center h-[10em] 1650res:h-[3em] 540res:px-3">
+        <header className="fixed w-full z-30 bg-def-black flex justify-center items-center h-24 1650res:h-14 540res:px-3">
             <div className="w-[97%] flex items-center justify-between">
                 <div>
                     <Link to='/'>
@@ -50,7 +50,7 @@ const Header: React.FC = () => {
                     </Link>
                 </div>
                 <div className="w-[45%] 540res:hidden">
-                    <form onSubmit={handleSubmit} className="w-full border-[#808080] border-[1px] flex overflow-hidden items-center rounded-full h-24 1650res:h-10">
+                    <form onSubmit={handleSubmit} className="w-full border-[#808080] border-[1px] flex overflow-hidden items-center rounded-full h-20 1650res:h-10">
                         <input type="text" value={query} onChange={handleInputChange} className="text-4xl 1650res:text-base px-[1em] outline-none border-none bg-[var(--bg-color)] h-full text-white w-full" placeholder="Введите запрос" />
                         <button className="flex justify-center items-center outline-none border-none h-full px-7 1650res:px-3 bg-[hsla(0,0%,100%,.04)] hover:bg-[hsla(0,0%,100%,.10)]">
                             <img src={search} alt="search" className="w-14 1650res:w-7" />

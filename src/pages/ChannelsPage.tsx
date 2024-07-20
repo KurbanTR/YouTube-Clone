@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchChannelById, fetchChannelVideos } from "../app/searchSlice"; // Используем правильный экспорт
 import useNumberFormatter from "../hooks/useNumberFormatter";
 import DateFormatter from "../hooks/DateFormatter";
 import { useQuery } from "@tanstack/react-query";
 import CardVideo from "../others/CardVideo";
+import { Modal } from "antd";
+import '../styles/antdModel.css';
 
 interface Channel {
   snippet: {
@@ -51,7 +53,8 @@ interface VideoItem {
   };
 }
 
-const ChannelsPage = () => {
+const ChannelsPage: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const params = useParams<{ id: string }>();
 
   const { data: channel, isError: isErrorChannel } = useQuery<Channel>({
@@ -80,14 +83,23 @@ const ChannelsPage = () => {
     return <div>Error loading data</div>;
   }
 
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
   return (
     <div className="w-11/12 m-auto pt-7 700res:pt-2">
       <div
-        className="h-[15vw] rounded-3xl 1480res:rounded-xl 700res:rounded-md"
+        className="h-[15vw] 540res:h-[22vw] rounded-3xl 1480res:rounded-xl 700res:rounded-md"
         style={{
           backgroundImage: `url(${channel?.brandingSettings?.image?.bannerExternalUrl})`,
           backgroundPosition: "center",
-          backgroundSize: "cover",
+          backgroundSize: 'cover',
         }}
       />
       <div className="mt-12 450res:mt-5 flex gap-x-8 540res:gap-x-5 450res:gap-x-3">
@@ -100,15 +112,16 @@ const ChannelsPage = () => {
           <h3 className="text-[2.7em] 1650res:text-[2.4em] 1320res:text-[2.1em] 800res:text-2xl 450res:text-base font-semibold text-white">
             {channel?.snippet?.title}
           </h3>
-          <div className="mt-3 450res:mt-[1px] flex flex-col gap-1">
-            <h4 className="800res:text-[10px] 450res:text-[6px]">
+          <div className="mt-3 450res:mt-[1px] flex flex-col gap-1 800res:text-[10px] 540res:text-[8px]">
+            <h4>
               {`${channel?.snippet?.customUrl} ‧ ${formattedSubscribers} подписчиков ‧ ${channel?.statistics?.videoCount} видео`}
             </h4>
-            <h4 className="800res:text-[10px] 450res:text-[6px]">
+            <h4 className="540res:hidden">
               {`${formattedViews} просмотров ‧ Канал создан ${formattedDate}`}
             </h4>
-            <h4 className="800res:text-[10px] 450res:text-[6px]">
-              {channel?.snippet?.description.slice(0, 60)}
+            <h4 className="flex gap-1">
+              <p>{channel?.snippet?.description.slice(0, 30)}</p>
+              <button onClick={showModal} className="hover:text-white cursor-pointer">еще...</button> 
             </h4>
           </div>
         </div>
@@ -119,6 +132,9 @@ const ChannelsPage = () => {
           <CardVideo item={item} type="video"/>
         ))}
       </div>
+      <Modal open={isModalOpen} onCancel={handleCancel} footer={null}>
+        <h2 className="text-white text-[2vw] 540res:text-[3vw]">{channel?.snippet?.description}</h2>
+      </Modal>
     </div>
   );
 };
