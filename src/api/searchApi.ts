@@ -4,6 +4,7 @@ type Params = {
     id?: string | undefined,
     channelId?: string | undefined,
     playlistId?: string | undefined,
+    videoId?: string | undefined,
     q?: string | undefined,
     part?: string | undefined,
     regionCode?: string | undefined,
@@ -28,5 +29,8 @@ export const videoApi = {
     },
     getPlaylistItems(params: Params) {
         return instance.get('playlistItems', { params });
+    },
+    getComments(params: Params) {
+        return instance.get('/commentThreads', { params });
     },
 };

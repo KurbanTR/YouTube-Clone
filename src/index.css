@@ -4,5 +4,6 @@
 
 body{
     background: #121212;
-    color: #989898
+    color: #989898;
+    text-overflow: ellipsis;
 }

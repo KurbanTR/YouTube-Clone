@@ -50,7 +50,6 @@ export const fetchVideoById = async (videoId: string) => {
             part: 'contentDetails,snippet,statistics',
             id: videoId
         });
-        console.log(response.data?.items?.[0]);
         return response.data?.items?.[0];
     } catch (error: unknown) {
         if (error instanceof Error) {
@@ -127,6 +126,24 @@ export const fetchPleylistVideos = async (id: string) => {
             part: 'snippet',
             playlistId: id,
             maxResults: 50,
+        });
+        console.log(response.data.items);
+        return response.data.items;
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error('Error fetching video by ID:', error.message);
+        } else {
+            console.error('Error fetching video by ID:', error);
+        }
+        throw error;
+    }
+};
+export const fetchComments = async (id: string) => {
+    try {
+        const response = await videoApi.getComments({
+            part: 'snippet',
+            videoId: id,
+            maxResults: 100,
         });
         console.log(response.data.items);
         return response.data.items;

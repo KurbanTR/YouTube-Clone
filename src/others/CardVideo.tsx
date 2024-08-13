@@ -34,7 +34,7 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type }) => {
     useEffect(() => {
         if (myElementRef.current) {
             const width = myElementRef.current.offsetWidth;
-            setElementHeight(width / 1.9);
+            setElementHeight(width / 2);
         }
     }, [myElementRef]);
     
@@ -79,10 +79,10 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type }) => {
                         />
                     }
                 </div>
-                <h3 className="text-[.8vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.5vw] 1000res:text-[2.5vw] 500res:text-[3vw] 500res:pt-2 font-[550] text-white">
-                    {item?.snippet?.title.slice(0, 40)}
+                <h3 className="text-[.8vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.5vw] 1000res:text-[2.5vw] 500res:text-[4vw] 500res:pt-2 font-[550] text-white">
+                    {item?.snippet?.title}
                 </h3>
-                <div className='text-[.6vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.2vw] 1000res:text-[2.2vw] 500res:text-[2.5vw]'>
+                <div className='text-[.6vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.2vw] 1000res:text-[2.2vw] 500res:text-[3vw]'>
                     <Link to={`/channels/${item?.snippet?.channelId}`} className='hover:text-white'>
                         {item?.snippet?.channelTitle}
                     </Link>

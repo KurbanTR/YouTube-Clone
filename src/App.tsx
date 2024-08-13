@@ -19,7 +19,6 @@ const App = () => {
         <Route path='/playlist' element={<PlayList/>}/>
         <Route path='/channels/:id' element={<ChannelsPage/>}/>
       </Routes>
-      <div className='min-h-[6vw]'/>
     </>
   )
 }

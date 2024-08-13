@@ -128,9 +128,11 @@ const ChannelsPage: React.FC = () => {
       </div>
       <div className="my-12 450res:my-5 h-[1px] bg-[#aaaaaa]" />
       <div className={`grid grid-cols-4 500res:grid-cols-1 700res:grid-cols-2 1200res:grid-cols-3 gap-4`}>
-        {channelVideos?.map((item) => (
-          <CardVideo item={item} type="video"/>
-        ))}
+        {channelVideos?.map((item) => 
+          item?.id?.kind !== 'youtube#channel' && (
+            <CardVideo item={item} type="video"/>
+          )
+        )}
       </div>
       <Modal open={isModalOpen} onCancel={handleCancel} footer={null}>
         <h2 className="text-white text-[2vw] 540res:text-[3vw]">{channel?.snippet?.description}</h2>

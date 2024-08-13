@@ -27,7 +27,7 @@ interface VideoItem {
 const MainPage = () => {
   const { data: videos, isLoading, isError, error } = useQuery<{ items: VideoItem[] }>({
     queryKey: ['main'],
-    queryFn: () => fetchVideos('plagini 1.1.5'),
+    queryFn: () => fetchVideos('edison'),
   });
 
   useEffect(() => {
