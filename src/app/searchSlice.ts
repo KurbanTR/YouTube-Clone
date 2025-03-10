@@ -5,7 +5,7 @@ export const fetchVideos = async (query: string) => {
         const response = await videoApi.getMainVideos({
             part: 'snippet',
             maxResults: 50,
-            regionCode: 'EN',
+            regionCode: 'RU',
             order: 'relevance',
             q: query
         });
