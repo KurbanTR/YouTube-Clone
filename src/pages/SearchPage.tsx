@@ -41,18 +41,31 @@ const SearchPage = () => {
 
     if (isLoading) {
         return (
-          <div className="flex items-center justify-center h-[85vh]">
-            <p className="text-white">Loading...</p>
-          </div>
+            <div className="min-h-screen flex justify-center">
+                <div className="flex flex-col gap-4 540res:gap-3 w-[55%] 1480res:w-[70%] 1100res:w-[80%] 800res:w-[95%]">                
+                    {[...Array(12)].map((_, index) =>
+                        <div className="flex gap-5 540res:gap-3 500res:flex-col cursor-pointer animate-pulse" key={index}>
+                            <div className="w-[44%] h-[14vw] 500res:w-full rounded-2xl bg-gray-700"/>
+                            <div className="w-[75%] flex flex-col gap-[.5vw]">
+                                <div className="h-6 bg-gray-700 mt-1 w-11/12 rounded-md"/>
+                                <div>
+                                    <div className="h-4 bg-gray-700 mt-2 w-1/5 rounded-[4px]"/>
+                                    <div className="h-11 bg-gray-700 mt-3 w-8/12 rounded-md"/>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
         );
-      }
-      if (error) {
+    }
+    if (error) {
         return (
-          <div className="flex items-center justify-center h-[85vh]">
-            <p className="text-white">Error: {error?.message || 'An error occurred'}</p>
-          </div>
+            <div className="flex items-center justify-center h-[85vh]">
+                <p className="text-white">Error: {error?.message || 'An error occurred'}</p>
+            </div>
         );
-      }
+    }
 
     return (
         <div className="min-h-screen flex justify-center">
