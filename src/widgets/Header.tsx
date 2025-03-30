@@ -62,7 +62,7 @@ const Header: React.FC = () => {
             </div>
             <Modal className="hidden 540res:block" open={isModalOpen} onCancel={handleCancel} footer={null}>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" value={query} onChange={handleInputChange} className="text-[1em] px-[0.75em] outline-none border-none border-2 bg-[var(--bg-color)] h-full text-white bg-black w-11/12 p-1 rounded-md" placeholder="Введите запрос" />
+                    <input type="text" value={query} onChange={handleInputChange} className="text-[1em] px-[0.5em] outline-none border-none border-2 bg-[var(--bg-color)] h-full text-white bg-black w-11/12 p-1 rounded-md" placeholder="Введите запрос" />
                 </form>
             </Modal>
         </header>

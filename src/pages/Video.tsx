@@ -61,21 +61,33 @@ interface CommentsItem {
 
 const Video = () => {
     const { cardWidth, cardHeight } = useCardSize();
-    const [searchParams] = useSearchParams();
-    const searchQuery = searchParams.get('v');
+    const [searchParams, setSearchParams] = useSearchParams();
     const [visibleDescription, setVisibleDescription] = useState<boolean>(false)
+    
+    const videoId = searchParams.get('v');
+    const time = searchParams.get("t");
+
+  useEffect(() => {
+    if (!time || !/^\d+s$/.test(time)) {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.delete("t");
+        setSearchParams(newParams, { replace: true });
+      }
+  }, [time, setSearchParams, searchParams]);
+
+  const videoTime = time && /^\d+s$/.test(time) ? parseInt(time, 10) : 0;
 
     const { data: video } = useQuery<Video>({
-        queryKey: ['video', { searchQuery }],
-        queryFn: () => fetchVideoById(searchQuery || ''),
+        queryKey: ['video', { videoId }],
+        queryFn: () => fetchVideoById(videoId || ''),
     });
     const { data: videos } = useQuery<VideoItem[]>({
-        queryKey: ['videos', { searchQuery }],
-        queryFn: () => fetchVideoVideos(searchQuery || ''),
+        queryKey: ['videos', { videoId }],
+        queryFn: () => fetchVideoVideos(videoId || ''),
     });
     const { data: comments } = useQuery<CommentsItem[]>({
-        queryKey: ['comments', { searchQuery }],
-        queryFn: () => fetchComments(searchQuery || ''),
+        queryKey: ['comments', { videoId }],
+        queryFn: () => fetchComments(videoId || ''),
     });
 
     useEffect(() => {
@@ -103,7 +115,7 @@ const Video = () => {
                                 width="100%"
                                 height="100%"
                                 className="rounded-xl"
-                                src={`https://www.youtube.com/embed/${searchQuery}?autoplay=1&mute=0&controls=1&origin=https%3A%2F%2Fwhimsical-jalebi-4d17fe.netlify.app&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=3`}
+                                src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&origin=https%3A%2F%2Fwhimsical-jalebi-4d17fe.netlify.app&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=3&start=${videoTime}`}
                             />
                         </div>
                         <div className="text-white font-[550]">

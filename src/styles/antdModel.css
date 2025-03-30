@@ -1,11 +1,18 @@
+.ant-modal {
+    top: 7px;
+}
 .ant-modal .ant-modal-content {
     background: black !important;
+    display: flex;
+    align-items: center;
+    padding: 10px 7px;
 }
 .ant-modal .ant-modal-title {
     background: black !important;
 }
 .ant-modal .ant-modal-close {
     color: white !important;
+    
 }
 .css-dev-only-do-not-override-98ntnt{
     margin-top: 0 !important;
