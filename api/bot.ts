@@ -1,4 +1,5 @@
 import { Telegraf } from 'telegraf';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 const bot = new Telegraf('8020324555:AAFDbJGTwZrJwsLZnSA5GD4OdmGteBWRpZE');
 
@@ -17,7 +18,7 @@ bot.start((ctx) => {
   });
 });
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method === 'POST') {
       await bot.handleUpdate(req.body);
