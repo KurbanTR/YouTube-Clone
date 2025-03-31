@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/api/bot.ts",
+      "source": "/api/bot",
       "destination": "/api/bot.ts"
     },
     {
