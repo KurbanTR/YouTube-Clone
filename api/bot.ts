@@ -7,7 +7,7 @@ bot.command("start", (ctx) => {
   ctx.reply("Открыть веб-приложение", {
     reply_markup: {
       inline_keyboard: [
-        [{ text: "Открыть", web_app: { url: "https://you-tube-clone-delta-puce.vercel.app/"}}]
+        [{ text: "Открыть", web_app: { url: "https://t.me/MyYouTubeCloneBot/YouTubeClone"}}]
       ],
     },
   });
