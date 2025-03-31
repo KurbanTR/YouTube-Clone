@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/bot.ts": {
+      "runtime": "nodejs16.x"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/bot",

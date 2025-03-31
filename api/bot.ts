@@ -1,7 +1,5 @@
-import express from 'express';
 import { Telegraf } from 'telegraf';
 
-const app = express();
 const bot = new Telegraf('8020324555:AAFDbJGTwZrJwsLZnSA5GD4OdmGteBWRpZE');
 
 bot.start((ctx) => {
@@ -19,12 +17,16 @@ bot.start((ctx) => {
   });
 });
 
-// Обрабатываем запросы от Telegram
-app.use('/api/bot', express.json(), async (req, res) => {
-  await bot.handleUpdate(req.body);
-  res.sendStatus(200); // Ответ Telegram о том, что данные получены
-});
-
-app.listen(5173, () => {
-  console.log('Server is running on port 5173');
-});
+export default async function handler(req, res) {
+  try {
+    if (req.method === 'POST') {
+      await bot.handleUpdate(req.body);
+      res.status(200).send('OK');
+    } else {
+      res.status(405).send('Method Not Allowed');
+    }
+  } catch (error) {
+    console.error('Error handling webhook:', error);
+    res.status(500).send('Internal Server Error');
+  }
+}
