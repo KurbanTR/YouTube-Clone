@@ -3,7 +3,7 @@ import { Telegraf } from "telegraf";
 
 const bot = new Telegraf('8020324555:AAFDbJGTwZrJwsLZnSA5GD4OdmGteBWRpZE');
 
-bot.command("start", (ctx) => {
+bot.command("web", (ctx) => {
   ctx.reply("Открыть веб-приложение", {
     reply_markup: {
       inline_keyboard: [
