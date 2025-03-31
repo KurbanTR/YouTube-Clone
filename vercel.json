@@ -1,9 +1,7 @@
 {
-  "functions": {
-    "api/bot.ts": {
-      "runtime": "nodejs16.x"
-    }
-  },
+  "builds": [
+    { "src": "/api/bot.ts", "use": "@vercel/node" }
+  ],
   "rewrites": [
     {
       "source": "/api/bot",
