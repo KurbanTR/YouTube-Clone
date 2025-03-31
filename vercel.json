@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "api/bot",
-      "destination": "/api/bot.ts"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

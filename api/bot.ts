@@ -18,7 +18,7 @@ bot.start((ctx) => {
   });
 });
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: VercelRequest, res: VercelResponse) { // Указываем типы для req и res
   try {
     if (req.method === 'POST') {
       await bot.handleUpdate(req.body);
