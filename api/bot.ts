@@ -7,7 +7,7 @@ bot.command("web", (ctx) => {
   ctx.reply("Открыть веб-приложение", {
     reply_markup: {
       inline_keyboard: [
-        [{ text: "Открыть", web_app: { url: "https://t.me/MyYouTubeCloneBot/YouTubeClone"}}]
+        [{ text: "Открыть", web_app: { url: "https://t.me/MyYouTubeCloneBot/YouTubeClone" } }],
       ],
     },
   });
