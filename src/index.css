@@ -8,4 +8,20 @@ body{
     color: #989898;
     text-overflow: ellipsis;
     font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
 }
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .video-card {
+    animation: fadeIn 0.4s ease-in-out;
+  }  

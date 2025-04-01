@@ -41,7 +41,6 @@ const MainPage = () => {
     queryFn: () => fetchVideos(genre),
   });
 
-  // Обновляем список видео при первом запросе
   useEffect(() => {
     if (data) {
       setVideoList(data.items);
@@ -54,28 +53,35 @@ const MainPage = () => {
 
     setIsFetching(true);
     try {
+      console.log('Загружаем новые видео...');
       const moreVideos = await fetchMoreVideos(genre, nextPageToken);
       setVideoList((prev) => [...prev, ...moreVideos.items]);
       setNextPageToken(moreVideos.nextPageToken || null);
     } catch (err) {
-      console.error('Error fetching more videos:', err);
+      console.error('Ошибка загрузки видео:', err);
     }
     setIsFetching(false);
   };
 
   useEffect(() => {
-    const handleScroll = () => {
+    const num = window.innerWidth <= 540 ? 2500 : 800
+    const interval = setInterval(() => {
       if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 900 &&
-        !isFetching
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - num &&
+        !isFetching &&
+        nextPageToken
       ) {
         loadMoreVideos();
       }
-    };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isFetching, nextPageToken]);
+      if (!nextPageToken) {
+        console.log('Больше видео нет, останавливаем подгрузку.');
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [nextPageToken, isFetching]);
 
   useEffect(() => {
     document.title = 'Главная - YouTube Clone';
@@ -84,7 +90,7 @@ const MainPage = () => {
   if (isError) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-white">Error: {error?.message || 'An error occurred'}</p>
+        <p className="text-white">Ошибка: {error?.message || 'Что-то пошло не так'}</p>
       </div>
     );
   }
@@ -101,7 +107,7 @@ const MainPage = () => {
                 <CardVideo item={item} key={index} type="playlist" />
               )
             )}
-            {[...Array(6)].map((_, index) => <CardVideo key={index} type="video" isLoad />)}
+        {window.innerWidth >=550 && [...Array(6)].map((_, index) => <CardVideo key={index} type="video" isLoad />)}
       </div>
       {isFetching && <p className="text-white text-center mt-4">Загрузка...</p>}
     </div>

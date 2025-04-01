@@ -70,7 +70,7 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type, isLoad }) => {
         <div
             onMouseEnter={() => handleMouseEnter(videoId)}
             onMouseLeave={handleMouseLeave}
-            className="cursor-pointer"
+            className="cursor-pointer video-card overflow-hidden"
         >
             <Link to={type === 'video' ? `/watch?v=${videoId}` : `playlist?list=${playlistId}`}>
                 <div
@@ -78,7 +78,7 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type, isLoad }) => {
                     style={{ height: `${elementHeight}px` }}
                     ref={myElementRef}
                 >
-                    {activeVideoId === videoId && type === 'video' ? (
+                    {activeVideoId === videoId && type === 'video' && window.innerWidth >= 540 ? (
                         <iframe
                             frameBorder="0"
                             allowFullScreen
