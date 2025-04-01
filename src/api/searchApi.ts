@@ -12,6 +12,7 @@ type Params = {
     order?: string | undefined,
     relatedToVideoId?: string,
     type?: string,
+    pageToken?: string,
 } 
 
 export const videoApi = {

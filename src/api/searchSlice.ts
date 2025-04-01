@@ -22,13 +22,13 @@ export const fetchVideos = async (query: string) => {
     }
 };
 
-export const fetchMoreVideos = async (query: string) => {
+export const fetchMoreVideos = async (query: string, nextPageToken: string) => {
     try {
         const response = await videoApi.getMainVideos({
             part: 'snippet',
             maxResults: 50,
             q: query,
-            // pageToken: nextPageToken,
+            pageToken: nextPageToken,
             regionCode: 'RU'
         });
         console.log(response.data);

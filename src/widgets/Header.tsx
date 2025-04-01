@@ -54,6 +54,9 @@ const Header: React.FC = () => {
                     <div className="w-[40%] 540res:hidden">
                         <form onSubmit={handleSubmit} className="w-full border-[#808080] border-[1px] flex overflow-hidden items-center rounded-full h-11 1650res:h-10">
                             <input type="text" value={query} onChange={handleInputChange} className="text-lg 1650res:text-base px-[1em] outline-none border-none bg-[var(--bg-color)] h-full text-white w-full" placeholder="Введите запрос" />
+                            {query !== '' && <div className="flex items-center">
+                                <img onClick={()=>setQuery('')} className="w-12 h-10 cursor-pointer rounded-full hover:bg-opacity-20 hover:bg-white" src="/cross.svg" alt="" />
+                            </div>}
                             <button className="flex justify-center items-center outline-none border-none h-full px-5 1650res:px-3 bg-[hsla(0,0%,100%,.04)] hover:bg-[hsla(0,0%,100%,.10)]">
                                 <img src={search} alt="search" className="w-8 1650res:w-7" />
                             </button>

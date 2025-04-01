@@ -1,36 +1,81 @@
-import { useEffect } from 'react';
-import { fetchVideos } from '../api/searchSlice';
+import { useEffect, useState } from 'react';
+import { fetchVideos, fetchMoreVideos } from '../api/searchSlice';
 import { useQuery } from '@tanstack/react-query';
 import CardVideo from '../others/CardVideo';
 import { useGenres } from '../context/context';
 
 interface VideoItem {
   id: {
-      kind: string;
-      videoId?: string;
-      playlistId?: string;
-      channelId?: string;
+    kind: string;
+    videoId?: string;
+    playlistId?: string;
+    channelId?: string;
   };
   snippet: {
-      title: string;
-      channelId: string;
-      channelTitle: string;
-      publishTime: string;
-      description: string;
-      thumbnails: {
-          high: {
-              url: string;
-          };
+    title: string;
+    channelId: string;
+    channelTitle: string;
+    publishTime: string;
+    description: string;
+    thumbnails: {
+      high: {
+        url: string;
       };
+    };
   };
 }
 
+interface VideoData {
+  nextPageToken: string;
+  items: VideoItem[];
+}
+
 const MainPage = () => {
-  const {genre} = useGenres()
-  const { data: videos, isLoading, isError, error } = useQuery<{ items: VideoItem[] }>({
+  const { genre } = useGenres();
+  const [videoList, setVideoList] = useState<VideoItem[]>([]);
+  const [nextPageToken, setNextPageToken] = useState<string | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const { data, isLoading, isError, error } = useQuery<VideoData>({
     queryKey: ['main', genre],
     queryFn: () => fetchVideos(genre),
   });
+
+  // Обновляем список видео при первом запросе
+  useEffect(() => {
+    if (data) {
+      setVideoList(data.items);
+      setNextPageToken(data.nextPageToken || null);
+    }
+  }, [data]);
+
+  const loadMoreVideos = async () => {
+    if (isFetching || !nextPageToken) return;
+
+    setIsFetching(true);
+    try {
+      const moreVideos = await fetchMoreVideos(genre, nextPageToken);
+      setVideoList((prev) => [...prev, ...moreVideos.items]);
+      setNextPageToken(moreVideos.nextPageToken || null);
+    } catch (err) {
+      console.error('Error fetching more videos:', err);
+    }
+    setIsFetching(false);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 &&
+        !isFetching
+      ) {
+        loadMoreVideos();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isFetching, nextPageToken]);
 
   useEffect(() => {
     document.title = 'Главная - YouTube Clone';
@@ -47,18 +92,18 @@ const MainPage = () => {
   return (
     <div className="min-h-screen p-4">
       <div className="grid grid-cols-6 2230res:grid-cols-5 1900res:grid-cols-4 1580res:grid-cols-3 1000res:grid-cols-2 500res:grid-cols-1 gap-x-[1vw] gap-y-[3vw] 1000res:gap-x-[2vw] 540res:gap-y-[7vw]">
-      {isLoading ? (
-        [...Array(32)].map((_, index) => <CardVideo key={index} type="video" isLoad />)
-      ) : (
-        videos?.items?.map((item, index) =>
-          item.id.kind !== 'youtube#channel' && item.id.kind !== 'youtube#playlist' ? (
-            <CardVideo item={item} key={index} type="video" />
-          ) : item.id.kind === 'youtube#playlist' ? (
-            <CardVideo item={item} key={index} type="playlist" />
-          ) : null
-        )
-      )}
+        {isLoading
+          ? [...Array(32)].map((_, index) => <CardVideo key={index} type="video" isLoad />)
+          : videoList.map((item, index) =>
+              item.id.kind !== 'youtube#channel' && item.id.kind !== 'youtube#playlist' ? (
+                <CardVideo item={item} key={index} type="video" />
+              ) : item.id.kind === 'youtube#playlist' && (
+                <CardVideo item={item} key={index} type="playlist" />
+              )
+            )}
+            {[...Array(6)].map((_, index) => <CardVideo key={index} type="video" isLoad />)}
       </div>
+      {isFetching && <p className="text-white text-center mt-4">Загрузка...</p>}
     </div>
   );
 };
