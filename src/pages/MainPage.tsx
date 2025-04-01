@@ -18,7 +18,7 @@ interface VideoItem {
       publishTime: string;
       description: string;
       thumbnails: {
-          medium: {
+          high: {
               url: string;
           };
       };

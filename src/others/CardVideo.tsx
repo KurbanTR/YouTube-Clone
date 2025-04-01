@@ -13,7 +13,7 @@ interface VideoItem {
         channelTitle: string;
         publishTime: string;
         thumbnails: {
-            medium: {
+            high: {
                 url: string;
             };
         };
@@ -88,7 +88,7 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type, isLoad }) => {
                             src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&mute=0&controls=0`}
                         />
                     ) : (
-                        <img src={item.snippet.thumbnails.medium.url} className="w-full h-full" alt={item.snippet.title} />
+                        <img src={item.snippet.thumbnails.high.url} className="w-full h-full object-cover" alt={item.snippet.title} />
                     )}
                 </div>
                 <h3 className="text-[.8vw] 2230res:text-[1vw] 1900res:text-[1.3vw] 1580res:text-[1.5vw] 1000res:text-[2.5vw] 500res:text-[4vw] 500res:pt-2 font-[550] text-white">
