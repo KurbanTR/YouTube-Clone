@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchChannelById, fetchChannelVideos } from "../app/searchSlice"; // Используем правильный экспорт
+import { fetchChannelById, fetchChannelVideos } from "../api/searchSlice"; // Используем правильный экспорт
 import useNumberFormatter from "../hooks/useNumberFormatter";
 import DateFormatter from "../hooks/DateFormatter";
 import { useQuery } from "@tanstack/react-query";

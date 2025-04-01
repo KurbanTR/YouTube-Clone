@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetchVideos } from "../app/searchSlice";
+import { fetchVideos } from "../api/searchSlice";
 import chek from '../assets/chek.svg';
 import DateFormatter from "../hooks/DateFormatter";
 import { useQuery } from "@tanstack/react-query";

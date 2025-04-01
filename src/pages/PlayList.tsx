@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
 import DateFormatter from "../hooks/DateFormatter";
 import { useQuery } from "@tanstack/react-query";
-import { fetchPleylistVideos } from "../app/searchSlice";
+import { fetchPleylistVideos } from "../api/searchSlice";
 
 interface VideoItem {
     id: {

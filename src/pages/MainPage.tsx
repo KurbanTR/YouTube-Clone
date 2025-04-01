@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { fetchVideos } from '../app/searchSlice';
+import { fetchVideos } from '../api/searchSlice';
 import { useQuery } from '@tanstack/react-query';
 import CardVideo from '../others/CardVideo';
+import { useGenres } from '../context/context';
 
 interface VideoItem {
   id: {
@@ -25,9 +26,10 @@ interface VideoItem {
 }
 
 const MainPage = () => {
+  const {genre} = useGenres()
   const { data: videos, isLoading, isError, error } = useQuery<{ items: VideoItem[] }>({
-    queryKey: ['main'],
-    queryFn: () => fetchVideos('edison'),
+    queryKey: ['main', genre],
+    queryFn: () => fetchVideos(genre),
   });
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const MainPage = () => {
       {isLoading ? (
         [...Array(12)].map((_, index) => <CardVideo key={index} type="video" isLoad />)
       ) : (
-        videos?.items.map((item, index) =>
+        videos?.items?.map((item, index) =>
           item.id.kind !== 'youtube#channel' && item.id.kind !== 'youtube#playlist' ? (
             <CardVideo item={item} key={index} type="video" />
           ) : item.id.kind === 'youtube#playlist' ? (

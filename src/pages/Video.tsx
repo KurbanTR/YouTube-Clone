@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchVideoById, fetchVideoVideos, fetchComments } from "../app/searchSlice";
+import { fetchVideoById, fetchVideoVideos, fetchComments } from "../api/searchSlice";
 import { Link, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useCardSize from "../hooks/useCardSize";
