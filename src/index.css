@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,24 +7,5 @@ body{
     background: #121212;
     color: #989898;
     text-overflow: ellipsis;
+    font-family: 'Roboto', sans-serif;
 }
-/* Для Chrome, Safari, Edge */
-.dark-scrollbar::-webkit-scrollbar {
-    width: 8px; /* Ширина скроллбара */
-    background: #1a1a1a; /* Тёмный фон скроллбара */
-}
-
-.dark-scrollbar::-webkit-scrollbar-thumb {
-    background: #444; /* Цвет "ползунка" */
-    border-radius: 6px; /* Скругление углов */
-}
-
-.dark-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #666; /* Цвет при наведении */
-}
-
-/* Для Firefox */
-.dark-scrollbar {
-    scrollbar-color: #444 #1a1a1a; /* Цвет "ползунка" и фона */
-}
-  
