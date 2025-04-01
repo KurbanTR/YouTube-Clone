@@ -14,7 +14,7 @@ interface Channel {
     customUrl: string;
     description: string;
     thumbnails: {
-      medium: {
+      high: {
         url: string;
       };
     };
@@ -46,7 +46,7 @@ interface VideoItem {
       publishTime: string;
       description: string;
       thumbnails: {
-          medium: {
+          high: {
               url: string;
           };
       };
@@ -104,7 +104,7 @@ const ChannelsPage: React.FC = () => {
       />
       <div className="mt-12 450res:mt-5 flex gap-x-8 540res:gap-x-5 450res:gap-x-3">
         <img
-          src={channel?.snippet?.thumbnails?.medium?.url}
+          src={channel?.snippet?.thumbnails?.high?.url}
           alt="AvatarImg"
           className="rounded-full w-60 h-60 1650res:w-56 1650res:h-56 1100res:w-40 1100res:h-40 800res:w-32 800res:h-32 450res:w-20 450res:h-20"
         />

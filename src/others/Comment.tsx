@@ -26,7 +26,7 @@ const Comment: React.FC<CommentProps> = ({item}) => {
     <div className="flex gap-3 w-full">
       <img src={item?.snippet?.topLevelComment?.snippet?.authorProfileImageUrl} alt="" className="rounded-full w-12 h-12" />
       <div className="relative bottom-1">
-        <Link to={`/channels/${item?.snippet?.topLevelComment?.snippet?.authorChannelId?.value}`} className="font-[550] text-lg 1480res:text-base 1000res:text-sm 500res:text-xs">{item?.snippet?.topLevelComment?.snippet?.authorDisplayName}</Link>
+        <Link to={`/channels/${item?.snippet?.topLevelComment?.snippet?.authorChannelId?.value}`} className="font-[450] text-[.8em] 1480res:text-[1vw] 1000res:text-[2vw] 500res:text-[2.5vw]">{item?.snippet?.topLevelComment?.snippet?.authorDisplayName}</Link>
         <p className="text-[.8em] 1480res:text-[1vw] 1000res:text-[2vw] 500res:text-[2.5vw]">{item?.snippet?.topLevelComment?.snippet?.textDisplay}</p>
       </div>
     </div>

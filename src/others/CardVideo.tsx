@@ -21,7 +21,7 @@ interface VideoItem {
 }
 
 interface CardVideoProps {
-    item?: VideoItem; // Сделаем item опциональным, т.к. для isLoad не нужен контент
+    item?: VideoItem;
     type: string;
     isLoad?: boolean;
 }
