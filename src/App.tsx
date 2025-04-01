@@ -14,7 +14,7 @@ const App = () => {
   return (
     <GenresContext.Provider value={{genre, setGenre}}>
       <Header/>
-      <div className='min-h-[12em] 1650res:min-h-[9em]'/>
+      <div className='min-h-[7em] 1650res:min-h-[9em]'/>
       <Routes>
         <Route path='/' element={<MainPage/>}/>
         <Route path='/result' element={<SearchPage/>}/>
