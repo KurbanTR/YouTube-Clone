@@ -66,7 +66,7 @@ const MainPage = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 &&
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 900 &&
         !isFetching
       ) {
         loadMoreVideos();
