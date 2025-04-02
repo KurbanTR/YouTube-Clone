@@ -9,8 +9,7 @@ export const fetchVideos = async (query: string) => {
             order: 'relevance',
             q: query
         });
-        console.log(response.data.nextPageToken);
-        console.log(response.data);
+        window.scrollTo({top:0})
         return response.data
     } catch (error: unknown) {
         if (error instanceof Error) {
@@ -31,8 +30,6 @@ export const fetchMoreVideos = async (query: string, nextPageToken: string) => {
             pageToken: nextPageToken,
             regionCode: 'RU'
         });
-        console.log(response.data);
-        console.log(query);
         return response.data
     } catch (error: unknown) {
         if (error instanceof Error) {
@@ -70,7 +67,6 @@ export const fetchVideoVideos = async (id: string) => {
             maxResults: 50,
             regionCode: "RU",
         });
-        console.log(response.data.items);
         return response.data.items;
     } catch (error: unknown) {
         if (error instanceof Error) {
@@ -88,7 +84,6 @@ export const fetchChannelById = async (channelId: string) => {
             part: 'snippet,statistics',
             id: channelId
         });
-        console.log(response.data?.items?.[0]);
         return response.data?.items?.[0];
     } catch (error: unknown) {
         if (error instanceof Error) {
@@ -108,7 +103,6 @@ export const fetchChannelVideos = async (id: string) => {
             maxResults: 50,
             order: 'date'
         });
-        console.log(response.data.items);
         return response.data.items;
     } catch (error: unknown) {
         if (error instanceof Error) {
@@ -127,7 +121,6 @@ export const fetchPleylistVideos = async (id: string) => {
             playlistId: id,
             maxResults: 50,
         });
-        console.log(response.data.items);
         return response.data.items;
     } catch (error: unknown) {
         if (error instanceof Error) {
@@ -145,7 +138,6 @@ export const fetchComments = async (id: string) => {
             videoId: id,
             maxResults: 100,
         });
-        console.log(response.data.items);
         return response.data.items;
     } catch (error: unknown) {
         if (error instanceof Error) {

@@ -43,12 +43,12 @@ const Header: React.FC = () => {
     };
 
     return (
-        <div className="z-30 fixed w-full bg-def-black">
-            <header className="flex justify-center items-center h-16 1650res:h-14 540res:px-3">
+        <div className='fixed z-30 w-full bg-def-black overflow-auto'>
+            <header className="flex justify-center items-center h-16 1650res:h-12 540res:px-3">
                 <div className="w-[97%] flex items-center justify-between">
                     <div>
                         <Link to='/'>
-                            <img src={logo} alt="logo" className="w-28 1650res:w-24" />
+                            <img src={logo} alt="logo" className="w-28 1650res:w-24 540res:w-20" />
                         </Link>
                     </div>
                     <div className="w-[40%] 540res:hidden">
@@ -63,7 +63,7 @@ const Header: React.FC = () => {
                         </form>
                     </div>
                     <div className="540res:hidden" />
-                    <img onClick={showModal} src={search} alt="search" className="hidden w-[1.5em] 540res:block" />
+                    <img onClick={showModal} src={search} alt="search" className="hidden w-[1.3em] 540res:block" />
                 </div>
                 <Modal className="hidden 540res:block" open={isModalOpen} onCancel={handleCancel} footer={null}>
                     <form onSubmit={handleSubmit}>
