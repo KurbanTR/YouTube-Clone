@@ -3,6 +3,7 @@ import { fetchVideos, fetchMoreVideos } from '../api/searchSlice';
 import { useQuery } from '@tanstack/react-query';
 import CardVideo from '../others/CardVideo';
 import { useGenres } from '../context/context';
+import { throttle } from 'lodash';
 
 interface VideoItem {
   id: {
@@ -39,6 +40,9 @@ const MainPage = () => {
   const { data, isLoading, isError, error } = useQuery<VideoData>({
     queryKey: ['main', genre],
     queryFn: () => fetchVideos(genre),
+    staleTime: 1000 * 60 * 5, // Данные обновляются не чаще, чем раз в 5 минут
+    gcTime: 1000 * 60 * 10, // Данные хранятся в кеше 10 минут
+    refetchOnWindowFocus: false, // Отключаем повторные запросы при возвращении на вкладку
   });
 
   useEffect(() => {
@@ -63,15 +67,17 @@ const MainPage = () => {
     setIsFetching(false);
   };
 
+  const throttledLoadMoreVideos = throttle(loadMoreVideos, 5000); // Ограничиваем до 1 запроса в 5 сек
+
   useEffect(() => {
-    const num = window.innerWidth <= 540 ? 2500 : 800
+    const num = window.innerWidth <= 540 ? 2500 : 800;
     const interval = setInterval(() => {
       if (
         window.innerHeight + window.scrollY >= document.body.offsetHeight - num &&
         !isFetching &&
         nextPageToken
       ) {
-        loadMoreVideos();
+        throttledLoadMoreVideos();
       }
 
       if (!nextPageToken) {
