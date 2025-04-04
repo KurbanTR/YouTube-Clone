@@ -40,7 +40,7 @@ interface VideoItem {
         publishTime: string;
         description: string;
         thumbnails: {
-            medium: {
+            high: {
                 url: string;
             };
         };
@@ -67,7 +67,8 @@ interface CommentsItem {
 const Video = () => {
     const { cardWidth, cardHeight } = useCardSize();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [visibleDescription, setVisibleDescription] = useState<boolean>(false)
+    const [visibleDescription, setVisibleDescription] = useState<boolean>(false);
+    const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
     
     const videoId = searchParams.get('v');
     const time = searchParams.get("t");
@@ -108,6 +109,13 @@ const Video = () => {
         setVisibleDescription(!visibleDescription)
     }
 
+    const handleMouseEnter = (videoId?: string) => {
+        if (videoId) setActiveVideoId(videoId);
+    };
+
+    const handleMouseLeave = () => {
+        setActiveVideoId(null);
+    };
     return (    
         <div className="flex justify-center">
             <div className={`flex gap-x-[1vw] gap-y-[3vw] w-[1440px] 1480res:w-[95%] 1000res:flex-col`}>
@@ -151,15 +159,26 @@ const Video = () => {
                 <div className="w-full flex flex-col gap-4">
                     {videos?.map((item, index) => (
                         item?.id?.kind !== 'youtube#channel' && (
-                            <Link to={`/watch?v=${item?.id?.videoId || item?.id?.playlistId}`} key={index}>
-                                <div className="flex gap-[.5vw] 1000res:gap-[1vw]  500res:gap-3">
-                                    <div className="w-[55%] 1650res:w-[50%] 1000res:w-1/3 500res:w-1/2">
-                                        <img
-                                            src={item?.snippet?.thumbnails?.medium?.url}
-                                            style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
-                                            className={`rounded-md w-full`}
-                                            alt={item?.snippet?.title}
-                                        />
+                            <Link to={`/watch?v=${item?.id?.videoId || item?.id?.playlistId}`} key={index} onMouseEnter={() => handleMouseEnter(item?.id?.videoId)} onMouseLeave={handleMouseLeave}>
+                                <div className="flex gap-[.5vw] 1000res:gap-[1vw] 500res:gap-3">
+                                    <div className="w-[55%] h-[6em] 1650res:w-[50%] 1650res:h-[5em] 1000res:w-1/3 500res:w-1/2 overflow-hidden rounded-md">
+                                        {activeVideoId === item?.id?.videoId && window.innerWidth >= 540 ? (
+                                            <iframe
+                                                frameBorder="0"
+                                                allowFullScreen
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                referrerPolicy="strict-origin-when-cross-origin"
+                                                className="w-full h-full z-[2] pointer-events-none"
+                                                src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&fs=0&disablekb=1`}
+                                            />
+                                        ) : (
+                                            <img
+                                                src={item?.snippet?.thumbnails?.high?.url}
+                                                style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
+                                                className={`w-full h-full object-cover`}
+                                                alt={item?.snippet?.title}
+                                            />                                        
+                                        )}
                                     </div>
                                     <div className="w-[75%]">
                                         <h3 className="text-[.8em] 1650res:text-[.8vw] 1000res:text-[2vw] 500res:text-[2.5vw] font-[550] text-white">{item.snippet.title}</h3>
