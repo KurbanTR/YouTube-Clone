@@ -40,9 +40,7 @@ const MainPage = () => {
   const { data, isLoading, isError, error } = useQuery<VideoData>({
     queryKey: ['main', genre],
     queryFn: () => fetchVideos(genre),
-    staleTime: 1000 * 60 * 5, // Данные обновляются не чаще, чем раз в 5 минут
-    gcTime: 1000 * 60 * 10, // Данные хранятся в кеше 10 минут
-    refetchOnWindowFocus: false, // Отключаем повторные запросы при возвращении на вкладку
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -90,7 +88,7 @@ const MainPage = () => {
   }, [nextPageToken, isFetching]);
 
   useEffect(() => {
-    document.title = 'Главная - YouTube Clone';
+    document.title = 'YouTube Clone';
   }, []);
 
   if (isError) {

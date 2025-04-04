@@ -33,6 +33,7 @@ const SearchPage = () => {
     const { data: videos, isLoading, error } = useQuery<{ items: VideoItem[] }>({
         queryKey: ['search', { searchQuery }],
         queryFn: () => fetchVideos(searchQuery),
+        refetchOnWindowFocus: false,
     });
 
     useEffect(() => {

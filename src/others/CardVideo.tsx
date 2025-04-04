@@ -80,12 +80,13 @@ const CardVideo: React.FC<CardVideoProps> = ({ item, type, isLoad }) => {
                 >
                     {activeVideoId === videoId && type === 'video' && window.innerWidth >= 540 ? (
                         <iframe
+                            id="yt-video"
                             frameBorder="0"
                             allowFullScreen
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             referrerPolicy="strict-origin-when-cross-origin"
                             className="w-full h-full z-[2] pointer-events-none"
-                            src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&mute=0&controls=0`}
+                            src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&fs=0&disablekb=1`}
                         />
                     ) : (
                         <img src={item.snippet.thumbnails.high.url} className="w-full h-full object-cover" alt={item.snippet.title} />

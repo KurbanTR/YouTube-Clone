@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import MainPage from './pages/MainPage';
 import Video from './pages/Video';
@@ -11,10 +11,17 @@ import { useState } from 'react';
 
 const App = () => {
   const [genre, setGenre] = useState<string>('edisonpts')
+  const location = useLocation()
   return (
     <GenresContext.Provider value={{genre, setGenre}}>
       <Header/>
-      <div className='min-h-[7em] 1650res:min-h-[6em] 540res:min-h-[5em]'/>
+      {
+        location.pathname == '/' ?
+          <div className='min-h-[7em] 1650res:min-h-[5.5em] 540res:min-h-[5em]'/>
+        :
+        <div className='min-h-[5em] 1650res:min-h-[3.5em] 540res:min-h-[3.2em]'/>
+      }
+      
       <Routes>
         <Route path='/' element={<MainPage/>}/>
         <Route path='/result' element={<SearchPage/>}/>

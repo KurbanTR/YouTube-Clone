@@ -35,6 +35,7 @@ const PlayList = () => {
     const { data: videos } = useQuery<VideoItem[]>({
         queryKey: ['playlist', { searchQuery }],
         queryFn: () => fetchPleylistVideos(searchQuery || ''),
+        refetchOnWindowFocus: false,
     });
     return (
         <div className="min-h-screen flex justify-center">

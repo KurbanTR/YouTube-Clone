@@ -52,7 +52,7 @@ const Header: React.FC = () => {
     }, [isModalOpen]);
 
     return (
-        <div className='fixed z-30 w-full bg-def-black overflow-auto'>
+        <div className='fixed z-10 w-full bg-def-black overflow-auto'>
             <header className="flex justify-center items-center h-16 1650res:h-12 540res:px-3">
                 <div className="w-[97%] flex items-center justify-between">
                     <div>
@@ -64,7 +64,7 @@ const Header: React.FC = () => {
                         <form onSubmit={handleSubmit} className="w-full border-white border-[1px] border-opacity-20 flex overflow-hidden items-center rounded-full h-11 1650res:h-8">
                             <input type="text" value={query} onChange={handleInputChange} className="text-[18px] font-sans 1650res:text-[14px] px-[1em] outline-none border-none bg-[var(--bg-color)] h-full text-white placeholder:text-white placeholder:text-opacity-35 w-full" placeholder="Введите запрос" />
                             {query !== '' && <div className="flex items-center">
-                                <img onClick={()=>setQuery('')} className="w-12 h-10 cursor-pointer rounded-full hover:bg-opacity-15 hover:bg-white" src="/cross.svg" alt="" />
+                                <img onClick={()=>setQuery('')} className="w-12 h-9 z-20 cursor-pointer rounded-full hover:bg-opacity-15 hover:bg-white" src="/cross.svg" alt="" />
                             </div>}
                             <button className="flex justify-center items-center outline-none border-l-[1px] border-white border-opacity-15 h-full px-5 1650res:px-3 bg-[hsla(0,0%,100%,.04)] hover:bg-[hsla(0,0%,100%,.10)]">
                                 <img src={search} alt="search" className="w-8 1650res:w-5" />

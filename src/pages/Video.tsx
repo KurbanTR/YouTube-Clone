@@ -14,6 +14,11 @@ interface Video {
         channelTitle: string;
         publishedAt: string,
         description: string,
+        thumbnails: {
+            maxres: {
+                url: string
+            }   
+        }
     };
     statistics: {
         viewCount: string,
@@ -80,14 +85,17 @@ const Video = () => {
     const { data: video } = useQuery<Video>({
         queryKey: ['video', { videoId }],
         queryFn: () => fetchVideoById(videoId || ''),
+        refetchOnWindowFocus: false,
     });
     const { data: videos } = useQuery<VideoItem[]>({
         queryKey: ['videos', { videoId }],
         queryFn: () => fetchVideoVideos(videoId || ''),
+        refetchOnWindowFocus: false,
     });
     const { data: comments } = useQuery<CommentsItem[]>({
         queryKey: ['comments', { videoId }],
         queryFn: () => fetchComments(videoId || ''),
+        refetchOnWindowFocus: false,
     });
 
     useEffect(() => {
@@ -105,19 +113,20 @@ const Video = () => {
             <div className={`flex gap-x-[1vw] gap-y-[3vw] w-[1440px] 1480res:w-[95%] 1000res:flex-col`}>
                 <div>
                     <div style={window.innerWidth >= 1480 ? {width: '57em'} : (window.innerWidth <= 1000 ? {width: '93vw'} : {width: cardWidth * 2})} className="flex flex-col gap-y-4">
-                        <div style={window.innerWidth >= 1480 ? {height: '35em'} : (window.innerWidth <= 1000 ? {height: '50vw'} : {height: cardHeight * 1.5})}>
-                            <iframe
-                                frameBorder="0"
-                                allowFullScreen
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                title="Embedded Video"
-                                width="100%"
-                                height="100%"
-                                className="rounded-xl"
-                                src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&origin=https%3A%2F%2Fwhimsical-jalebi-4d17fe.netlify.app&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=3&start=${videoTime}`}
-                            />
-                        </div>
+                        <div style={window.innerWidth >= 1480 ? {height: '35em'} : (window.innerWidth <= 1000 ? {height: '50vw'} : {height: cardHeight * 2})} className="rounded-xl overflow-hidden relative">
+                                <iframe
+                                    frameBorder="0"
+                                    allowFullScreen
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerPolicy="strict-origin-when-cross-origin"
+                                    title="Embedded Video"
+                                    width="100%"
+                                    height="100%"                       
+                                    className="z-10"
+                                    src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&playsinline=1&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=3&start=${videoTime}`}
+                                />
+                                <div className="absolute top-0 left-0 w-full h-[5em] pointer-events-auto z-20" style={{ cursor: 'default' }}/>
+                            </div>
                         <div className="text-white font-[550]">
                             <h2 className="text-[1.7em] 1480res:text-[2vw] 1000res:text-[2.5vw] 500res:text-[3vw] 500res:relative 500res:top-2">{video?.snippet?.title}</h2>
                             <Link to={`/channels/${video?.snippet?.channelId}`} className="text-[1.5em] 1480res:text-[1.5vw] 1000res:text-[2vw] 500res:text-[2.7vw]">{video?.snippet?.channelTitle}</Link>
@@ -130,7 +139,7 @@ const Video = () => {
                                 <button className={`font-[550] ${!visibleDescription && 'hidden'}`} onClick={isDescription}>Свернуть</button>
                             </div>
                         </div>
-                        <div className="text-white p-4 540res:p-2 w-full flex flex-col gap-3">
+                        <div className="text-white p-4 540res:p-2 w-full flex flex-col gap-7 1480res:gap-3 1000res:gap-2 500res:gap-1">
                             {
                                 comments?.map((item, index) => (
                                     <Comment item={item} key={index}/>
