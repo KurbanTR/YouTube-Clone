@@ -1,36 +1,16 @@
 import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetchVideos } from "../api/searchSlice";
-import chek from '../assets/chek.svg';
-import DateFormatter from "../hooks/DateFormatter";
+import { fetchVideos } from "@/api/searchSlice";
+import chek from '@/assets/chek.svg';
+import {DateFormatter} from "@/hooks";
 import { useQuery } from "@tanstack/react-query";
-
-interface VideoItem {
-    id: {
-        kind: string;
-        videoId?: string;
-        playlistId?: string;
-        channelId?: string;
-    };
-    snippet: {
-        title: string;
-        thumbnails: {
-            medium: {
-                url: string;
-            };
-        };
-        publishTime: string;
-        channelId?: string;
-        channelTitle: string;
-        description: string;
-    };
-}
+import { VideoItemType } from "@/types";
 
 const SearchPage = () => {  
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('search_query') || '';
 
-    const { data: videos, isLoading, error } = useQuery<{ items: VideoItem[] }>({
+    const { data: videos, isLoading, error } = useQuery<{ items: VideoItemType[] }>({
         queryKey: ['search', { searchQuery }],
         queryFn: () => fetchVideos(searchQuery),
         refetchOnWindowFocus: false,
@@ -77,7 +57,7 @@ const SearchPage = () => {
                             <div className="flex gap-5 540res:gap-3 500res:flex-col">
                                 <div className="w-[44%] 500res:w-full">
                                     <img
-                                        src={item.snippet.thumbnails.medium.url}
+                                        src={item.snippet.thumbnails.high.url}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
                                         className={`rounded-xl 540res:rounded-md w-full`}
                                         alt={item.snippet.title}
@@ -99,7 +79,7 @@ const SearchPage = () => {
                             <div className="flex gap-5 540res:gap-3 500res:flex-col">
                                 <div className="w-[44%] 500res:w-full">
                                     <img
-                                        src={item.snippet.thumbnails.medium.url}
+                                        src={item.snippet.thumbnails.high.url}
                                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
                                         className={`rounded-xl 540res:rounded-md w-full`}
                                         alt={item.snippet.title}
@@ -121,7 +101,7 @@ const SearchPage = () => {
                             <div className="flex gap-5 540res:gap-3">
                                 <div className="w-[44%] flex justify-center">
                                     <img
-                                        src={item.snippet.thumbnails.medium.url}
+                                        src={item.snippet.thumbnails.high.url}
                                         className={`rounded-full w-1/2`}
                                         alt={item.snippet.title}
                                     />

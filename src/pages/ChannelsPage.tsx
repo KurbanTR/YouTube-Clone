@@ -1,68 +1,23 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchChannelById, fetchChannelVideos } from "../api/searchSlice"; // Используем правильный экспорт
-import useNumberFormatter from "../hooks/useNumberFormatter";
-import DateFormatter from "../hooks/DateFormatter";
+import {DateFormatter, useNumberFormatter} from "../hooks";
 import { useQuery } from "@tanstack/react-query";
 import CardVideo from "../others/CardVideo";
 import { Modal } from "antd";
 import '../styles/antdModel.css';
-
-interface Channel {
-  snippet: {
-    title: string;
-    customUrl: string;
-    description: string;
-    thumbnails: {
-      high: {
-        url: string;
-      };
-    };
-    publishedAt: string;
-  };
-  brandingSettings: {
-    image: {
-      bannerExternalUrl: string;
-    };
-  };
-  statistics: {
-    subscriberCount: number;
-    videoCount: number;
-    viewCount: number;
-  };
-}
-
-interface VideoItem {
-  id: {
-      kind: string;
-      videoId?: string;
-      playlistId?: string;
-      channelId?: string;
-  };
-  snippet: {
-      title: string;
-      channelId: string;
-      channelTitle: string;
-      publishTime: string;
-      description: string;
-      thumbnails: {
-          high: {
-              url: string;
-          };
-      };
-  };
-}
+import { ChannelType, VideoItemType } from "@/types";
 
 const ChannelsPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const params = useParams<{ id: string }>();
 
-  const { data: channel, isError: isErrorChannel } = useQuery<Channel>({
+  const { data: channel, isError: isErrorChannel } = useQuery<ChannelType>({
     queryKey: ['channel', params.id],
     queryFn: () => fetchChannelById(params.id as string),
   });
 
-  const { data: channelVideos, isError: isErrorVideos } = useQuery<VideoItem[]>({
+  const { data: channelVideos, isError: isErrorVideos } = useQuery<VideoItemType[]>({
     queryKey: ['channelVideos', params.id],
     queryFn: () => fetchChannelVideos(params.id as string),
   });

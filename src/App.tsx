@@ -1,13 +1,13 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
-import './App.css';
-import MainPage from './pages/MainPage';
-import Video from './pages/Video';
-import ChannelsPage from './pages/ChannelsPage';
-import Header from './widgets/Header';
-import SearchPage from './pages/SearchPage';
-import PlayList from './pages/PlayList';
-import { GenresContext } from './context/context';
 import { useState } from 'react';
+import '@/App.css';
+import MainPage from '@/pages/MainPage';
+import Video from '@/pages/Video';
+import ChannelsPage from '@/pages/ChannelsPage';
+import Header from '@/widgets/Header';
+import SearchPage from '@/pages/SearchPage';
+import PlayList from '@/pages/PlayList';
+import { GenresContext } from '@/hooks/context/genresContext';
 
 const App = () => {
   const [genre, setGenre] = useState<string>('edisonpts')
@@ -34,3 +34,16 @@ const App = () => {
 }
 
 export default App
+
+// import YouTubePlayer from './YouTubePlayer';
+
+// const App = () => {
+//   return (
+//     <div>
+//       <h1>Видео с YouTube</h1>
+//       <YouTubePlayer videoId="dQw4w9WgXcQ" />
+//     </div>
+//   );
+// };
+
+// export default App;

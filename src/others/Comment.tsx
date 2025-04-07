@@ -1,29 +1,10 @@
 import { Link } from "react-router-dom";
-import DateFormatter from "../hooks/DateFormatter";
+import DateFormatter from "@/hooks/utils/dateFormatter";
+import { CommentPropsType } from "@/types";
 
-interface CommentItem {
-    snippet: {
-        topLevelComment?: {
-            snippet?: {
-                textDisplay?: string;
-                publishedAt?: string;
-                updatedAt?: string;
-                likeCount?: number;
-                authorProfileImageUrl?: string;
-                authorDisplayName?: string;
-                authorChannelId: {
-                  value: string;
-                };
-            }
-        }
-    }
-}
 
-interface CommentProps {
-    item: CommentItem;
-}
 
-const Comment: React.FC<CommentProps> = ({item}) => {  
+const Comment: React.FC<CommentPropsType> = ({item}) => {  
   return (
     <div className="flex flex-col">
       <div className="flex gap-3 w-full">

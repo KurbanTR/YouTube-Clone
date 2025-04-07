@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { useGenres } from "../context/context"
-import { genres } from "../utils/genre"
+import { useGenres } from "../hooks/context/genresContext"
+import { genres } from "@/hooks/data/genres"
 import { useLocation } from "react-router-dom"
 
 const Catigories = () => {

@@ -1,38 +1,14 @@
 import { Link, useSearchParams } from "react-router-dom";
-import DateFormatter from "../hooks/DateFormatter";
+import {DateFormatter} from "../hooks";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPleylistVideos } from "../api/searchSlice";
-
-interface VideoItem {
-    id: {
-        kind: string;
-        videoId?: string;
-        playlistId?: string;
-        channelId?: string;
-    };
-    snippet: {
-        title: string;
-        channelId: string;
-        channelTitle: string;
-        publishTime: string;
-        publishedAt: string;
-        description: string;
-        resourceId?: {
-            videoId: string;
-        }
-        thumbnails: {
-            medium: {
-                url: string;
-            };
-        };
-    };
-}
+import { VideoItemType } from "@/types";
 
 const PlayList = () => {
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('list');
 
-    const { data: videos } = useQuery<VideoItem[]>({
+    const { data: videos } = useQuery<VideoItemType[]>({
         queryKey: ['playlist', { searchQuery }],
         queryFn: () => fetchPleylistVideos(searchQuery || ''),
         refetchOnWindowFocus: false,
@@ -45,7 +21,7 @@ const PlayList = () => {
                         <div className="flex gap-5">
                             <div className="w-[44%]">
                                 <img
-                                    src={item.snippet.thumbnails.medium.url}
+                                    src={item.snippet.thumbnails.high.url}
                                     style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
                                     className={`rounded-xl w-full`}
                                     alt={item.snippet.title}

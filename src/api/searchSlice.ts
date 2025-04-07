@@ -9,13 +9,16 @@ export const fetchVideos = async (query: string) => {
             order: 'relevance',
             q: query
         });
-        window.scrollTo({top:0})
-        return response.data
+        window.scrollTo({top: 0});
+        return {
+            nextPageToken: response.data.nextPageToken,
+            items: response.data.items
+        };
     } catch (error: unknown) {
         if (error instanceof Error) {
-            console.error('Error fetching video by ID:', error.message);
+            console.error('Error fetching videos:', error.message);
         } else {
-            console.error('Error fetching video by ID:', error);
+            console.error('Error fetching videos:', error);
         }
         throw error;
     }
@@ -30,12 +33,15 @@ export const fetchMoreVideos = async (query: string, nextPageToken: string) => {
             pageToken: nextPageToken,
             regionCode: 'RU'
         });
-        return response.data
+        return {
+            nextPageToken: response.data.nextPageToken,
+            items: response.data.items
+        };
     } catch (error: unknown) {
         if (error instanceof Error) {
-            console.error('Error fetching video by ID:', error.message);
+            console.error('Error fetching more videos:', error.message);
         } else {
-            console.error('Error fetching video by ID:', error);
+            console.error('Error fetching more videos:', error);
         }
         throw error;
     }

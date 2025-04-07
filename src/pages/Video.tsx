@@ -2,67 +2,9 @@ import { useEffect, useState } from "react";
 import { fetchVideoById, fetchVideoVideos, fetchComments } from "../api/searchSlice";
 import { Link, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import useCardSize from "../hooks/useCardSize";
-import DateFormatter from "../hooks/DateFormatter";
-import BigNumber from "../hooks/BigNumber";
+import {BigNumber, DateFormatter, useCardSize} from "../hooks";
 import Comment from "../others/Comment";
-
-interface Video {
-    snippet: {
-        title: string;
-        channelId: string;
-        channelTitle: string;
-        publishedAt: string,
-        description: string,
-        thumbnails: {
-            maxres: {
-                url: string
-            }   
-        }
-    };
-    statistics: {
-        viewCount: string,
-        likeCount: string,
-    }
-}
-
-interface VideoItem {
-    id: {
-        kind: string;
-        videoId?: string;
-        playlistId?: string;
-        channelId?: string;
-    };
-    snippet: {
-        title: string;
-        channelId: string;
-        channelTitle: string;
-        publishTime: string;
-        description: string;
-        thumbnails: {
-            high: {
-                url: string;
-            };
-        };
-    };
-}
-
-interface CommentsItem {
-    snippet: {
-        topLevelComment: {
-            snippet: {
-                textDisplay?: string;
-                publishedAt?: string;
-                likeCount?: number;
-                authorProfileImageUrl?: string;
-                authorDisplayName?: string;
-                authorChannelId: {
-                    value: string;
-                };
-            }
-        }
-    };
-}
+import { CommentItemType, VideoItemType, VideoType } from "@/types";
 
 const Video = () => {
     const { cardWidth, cardHeight } = useCardSize();
@@ -72,28 +14,27 @@ const Video = () => {
     
     const videoId = searchParams.get('v');
     const time = searchParams.get("t");
+    const videoTime = time && /^\d+s$/.test(time) ? parseInt(time.replace("s", ""), 10) : 0;
 
-  useEffect(() => {
-    if (!time || !/^\d+s$/.test(time)) {
-        const newParams = new URLSearchParams(searchParams);
-        newParams.delete("t");
-        setSearchParams(newParams, { replace: true });
-      }
-  }, [time, setSearchParams, searchParams]);
+    useEffect(() => {
+        if (time && !/^\d+s$/.test(time)) {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.delete("t");
+            setSearchParams(newParams, { replace: true });
+        }
+    }, [time, setSearchParams, searchParams]);
 
-  const videoTime = time && /^\d+s$/.test(time) ? parseInt(time, 10) : 0;
-
-    const { data: video } = useQuery<Video>({
+    const { data: video } = useQuery<VideoType>({
         queryKey: ['video', { videoId }],
         queryFn: () => fetchVideoById(videoId || ''),
         refetchOnWindowFocus: false,
     });
-    const { data: videos } = useQuery<VideoItem[]>({
+    const { data: videos } = useQuery<VideoItemType[]>({
         queryKey: ['videos', { videoId }],
         queryFn: () => fetchVideoVideos(videoId || ''),
         refetchOnWindowFocus: false,
     });
-    const { data: comments } = useQuery<CommentsItem[]>({
+    const { data: comments } = useQuery<CommentItemType[]>({
         queryKey: ['comments', { videoId }],
         queryFn: () => fetchComments(videoId || ''),
         refetchOnWindowFocus: false,
