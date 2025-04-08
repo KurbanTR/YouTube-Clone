@@ -7,7 +7,7 @@ const useColorCard = ({ index = 5 }) => {
     };
 
     // Генерация цвета с прозрачностью 50%
-    const color = `${generateColorFromIndex(index).replace('rgb', 'rgba').replace(')', ', .1)')}`;
+    const color = `${generateColorFromIndex(index).replace('rgb', 'rgba').replace(')', ', .2)')}`;
 
     return { color };
 }

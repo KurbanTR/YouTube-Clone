@@ -6,7 +6,7 @@ interface VideoData {
 
 const useVideoManager = () => {
   const [videoTimes, setVideoTimes] = useState<VideoData>({});
-
+  // localStorage.clear()
   useEffect(() => {
     const data = localStorage.getItem('videoTimes');
     if (data) {
@@ -15,7 +15,7 @@ const useVideoManager = () => {
   }, []);
 
   const setVideo = (id: string, time: number, duration: number) => {
-    const updatedVideoTimes = { ...videoTimes, [id]: {time, duration} };
+    const updatedVideoTimes = { ...videoTimes, [id]: {time, duration} };    
     setVideoTimes(updatedVideoTimes);
     localStorage.setItem('videoTimes', JSON.stringify(updatedVideoTimes));
   };

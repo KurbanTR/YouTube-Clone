@@ -8,6 +8,7 @@ import Header from '@/widgets/Header';
 import SearchPage from '@/pages/SearchPage';
 import PlayList from '@/pages/PlayList';
 import { GenresContext } from '@/hooks/context/genresContext';
+import ErrorPage from './pages/ErrorPage';
 
 const App = () => {
   const [genre, setGenre] = useState<string>('edisonpts')
@@ -28,22 +29,10 @@ const App = () => {
         <Route path='/watch' element={<Video/>}/>
         <Route path='/playlist' element={<PlayList/>}/>
         <Route path='/channels/:id' element={<ChannelsPage/>}/>
+        <Route path='/*' element={<ErrorPage/>}/>
       </Routes>
     </GenresContext.Provider>
   )
 }
 
 export default App
-
-// import YouTubePlayer from './YouTubePlayer';
-
-// const App = () => {
-//   return (
-//     <div>
-//       <h1>Видео с YouTube</h1>
-//       <YouTubePlayer videoId="dQw4w9WgXcQ" />
-//     </div>
-//   );
-// };
-
-// export default App;

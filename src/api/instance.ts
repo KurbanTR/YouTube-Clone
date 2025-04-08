@@ -6,9 +6,9 @@ const diff = currentDate.getTime() - startOfYear.getTime();
 const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
 
 const apiKeys = [
-  "6b375bd8bcmsh44e0b73aa91d1e5p1eb99cjsn3516d424f820",
   "fb52cf540fmsh17fb9fbc488f397p194099jsna99591039e3c", 
-  "abe9856403msh9787d810cdbc155p11c8fejsna2158926bde1" 
+  "abe9856403msh9787d810cdbc155p11c8fejsna2158926bde1",
+  "6b375bd8bcmsh44e0b73aa91d1e5p1eb99cjsn3516d424f820",
 ];
 
 const getApiKeyForToday = () => {

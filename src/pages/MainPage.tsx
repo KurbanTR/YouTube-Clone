@@ -5,6 +5,7 @@ import CardVideo from '@/others/CardVideo';
 import { useGenres } from '@/hooks/context/genresContext';
 import { throttle } from 'lodash';
 import { VideoItemType, VideoDataType } from '@/types';
+import ErrorPage from './ErrorPage';
 
 const MainPage = () => {
   const { genre } = useGenres();
@@ -56,17 +57,11 @@ const MainPage = () => {
     document.title = 'YouTube Clone';
   }, []);
 
-  if (isError) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-white">Ошибка: {error?.message || 'Что-то пошло не так'}</p>
-      </div>
-    );
-  }
+  if (isError) return <ErrorPage error={error}/>
 
   return (
     <div className="min-h-screen p-4 500res:px-0">
-      <div className="grid grid-cols-6 2230res:grid-cols-5 1900res:grid-cols-4 1580res:grid-cols-3 1000res:grid-cols-2 500res:grid-cols-1 gap-x-[.1vw] gap-y-[3vw] 1000res:gap-x-[.5vw]  500res:gap-x-0 540res:gap-y-[7vw]">
+      <div className="grid grid-cols-6 2230res:grid-cols-5 1900res:grid-cols-4 1580res:grid-cols-3 1000res:grid-cols-2 500res:grid-cols-1 gap-x-[.1vw] gap-y-[.7vw] 1000res:gap-x-[.5vw]  500res:gap-x-0 540res:gap-y-[7vw]">
         {isLoading
           ? [...Array(32)].map((_, index) => <CardVideo key={index} type="video" isLoad />)
           : videoList.map((item, index) =>
