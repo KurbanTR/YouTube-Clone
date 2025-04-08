@@ -7,7 +7,6 @@ const YouTubePlayer: React.FC<{ videoId: string | null, videoTime: number }> = (
   const [duration, setDuration] = useState(0)
   const [hasSeeked, setHasSeeked] = useState(false)
   const [isLoadVideo, setLoadVideo] = useState<boolean>(false)
-  const [isLoad, setLoad] = useState<boolean>(true)
   const playerRef = useRef<ReactPlayer>(null)
   const { setVideo, videoTimes } = useVideoManager()
   const videoData = videoId ? videoTimes?.[videoId] : null
@@ -38,7 +37,6 @@ const YouTubePlayer: React.FC<{ videoId: string | null, videoTime: number }> = (
     if (!playerRef.current || hasSeeked || start <= 0) return;
     const startTime = videoTime == 0 ? start : videoTime
     // console.log(startTime, start, videoTime);
-    setLoad(false)
     playerRef.current.seekTo(startTime, 'seconds');
     setHasSeeked(true);
 }, [start, hasSeeked, videoTime]);
