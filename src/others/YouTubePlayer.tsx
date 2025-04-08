@@ -1,23 +1,33 @@
 import { useVideoManager } from '@/hooks'
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import ReactPlayer from 'react-player/youtube'
 
-const YouTubePlayer: React.FC<{ videoId: string }> = ({ videoId }) => {
+const YouTubePlayer: React.FC<{ videoId: string | null, videoTime: number }> = ({ videoId, videoTime = 0 }) => {
   const [percentTime, setPercentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [hasSeeked, setHasSeeked] = useState(false)
-
+  const [isLoadVideo, setLoadVideo] = useState<boolean>(false)
+  const [isLoad, setLoad] = useState<boolean>(true)
   const playerRef = useRef<ReactPlayer>(null)
   const { setVideo, videoTimes } = useVideoManager()
   const videoData = videoId ? videoTimes?.[videoId] : null
   const start = videoData?.time || 0
+
+  if(!videoId) return;
 
   const handleProgress = (state: { playedSeconds: number }) => {
     const time = Math.round(state.playedSeconds)
     if (time === 0) return
     const percent = (time / duration) * 100
     setPercentTime(percent)
-    setVideo(videoId, time, duration)
+    if(!isLoadVideo){
+      setLoadVideo(true)
+      setVideo(videoId, time, duration)
+      console.log(time);      
+      setTimeout(() => {
+        setLoadVideo(false)
+      }, 5000)
+    }
   }
 
   const handleDuration = (dur: number) => {
@@ -25,11 +35,13 @@ const YouTubePlayer: React.FC<{ videoId: string }> = ({ videoId }) => {
   }
 
   useEffect(() => {
-    if (playerRef.current && start > 0 && !hasSeeked) {
-        playerRef.current.seekTo(start, 'seconds')
-        setHasSeeked(true)
-    }
-}, [start, hasSeeked])
+    if (!playerRef.current || hasSeeked || start <= 0) return;
+    const startTime = videoTime == 0 ? start : videoTime
+    // console.log(startTime, start, videoTime);
+    setLoad(false)
+    playerRef.current.seekTo(startTime, 'seconds');
+    setHasSeeked(true);
+}, [start, hasSeeked, videoTime]);
 
   return (
     <div className="relative w-full h-full">
@@ -44,11 +56,10 @@ const YouTubePlayer: React.FC<{ videoId: string }> = ({ videoId }) => {
         height="100%"
         config={{
           playerVars: {
+            autoplay: 1,
             rel: 0,
             controls: 0,
             fs: 0,
-            disablekb: 1,
-            modestbranding: 1
           }
         }}
       />

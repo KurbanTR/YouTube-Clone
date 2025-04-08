@@ -5,12 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import {BigNumber, DateFormatter, useCardSize} from "../hooks";
 import Comment from "../others/Comment";
 import { CommentItemType, VideoItemType, VideoType } from "@/types";
+import YouTubePlayer from "@/others/YouTubePlayer";
 
 const Video = () => {
     const { cardWidth, cardHeight } = useCardSize();
     const [searchParams, setSearchParams] = useSearchParams();
     const [visibleDescription, setVisibleDescription] = useState<boolean>(false);
     const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+    const [startTime, setStartTime] = useState<number>(0)
     
     const videoId = searchParams.get('v');
     const time = searchParams.get("t");
@@ -18,6 +20,11 @@ const Video = () => {
 
     useEffect(() => {
         if (time && !/^\d+s$/.test(time)) {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.delete("t");
+            setSearchParams(newParams, { replace: true });
+        }else{
+            setStartTime(videoTime)
             const newParams = new URLSearchParams(searchParams);
             newParams.delete("t");
             setSearchParams(newParams, { replace: true });
@@ -63,7 +70,7 @@ const Video = () => {
                 <div>
                     <div style={window.innerWidth >= 1480 ? {width: '57em'} : (window.innerWidth <= 1000 ? {width: '93vw'} : {width: cardWidth * 2})} className="flex flex-col gap-y-4">
                         <div style={window.innerWidth >= 1480 ? {height: '35em'} : (window.innerWidth <= 1000 ? {height: '50vw'} : {height: cardHeight * 2})} className="rounded-xl overflow-hidden relative">
-                                <iframe
+                                {/* <iframe
                                     frameBorder="0"
                                     allowFullScreen
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -73,8 +80,10 @@ const Video = () => {
                                     height="100%"                       
                                     className="z-10"
                                     src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&playsinline=1&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=3&start=${videoTime}`}
-                                />
-                                <div className="absolute top-0 left-0 w-full h-[5em] pointer-events-auto z-20" style={{ cursor: 'default' }}/>
+                                /> */}
+                                <YouTubePlayer videoId={videoId} videoTime={startTime} />
+                                <div className="absolute top-0 left-0 w-full h-[4em] pointer-events-auto z-20" style={{ cursor: 'default' }}/>
+                                {/* <div className="absolute bottom-0 left-0 w-full h-[4em] pointer-events-auto z-20" style={{ cursor: 'default' }}/> */}
                             </div>
                         <div className="text-white font-[550]">
                             <h2 className="text-[1.7em] 1480res:text-[2vw] 1000res:text-[2.5vw] 500res:text-[3vw] 500res:relative 500res:top-2">{video?.snippet?.title}</h2>

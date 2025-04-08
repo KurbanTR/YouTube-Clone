@@ -3,7 +3,6 @@ import {DateFormatter, useVideoManager} from '@/hooks';
 import { useEffect, useRef, useState } from 'react';
 import { useColorCard, useTrimText } from '@/hooks';
 import { VideoItemType } from '@/types';
-import YouTubePlayer from './YouTubePlayer';
 
 const CardVideo: React.FC<{item?: VideoItemType; type: string; isLoad?: boolean; index?: number}> = ({ item, type, isLoad, index }) => {
     const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
@@ -58,7 +57,7 @@ const CardVideo: React.FC<{item?: VideoItemType; type: string; isLoad?: boolean;
         <div
             onMouseEnter={() => handleMouseEnter(videoId)}
             onMouseLeave={handleMouseLeave}
-            className='cursor-pointer video-card overflow-hidden rounded-[17px] 1580res:rounded-[13px] 1000res:rounded-[7px] 500res:rounded-none p-[10px] 1580res:p-[6px] 1000res:p-[4px] 500res:p-0 transition-all duration-700 ease-custom-ease'
+            className='cursor-pointer video-card overflow-hidden rounded-[17px] 1580res:rounded-[13px] 1000res:rounded-[7px] 500res:rounded-none p-[10px] 1580res:p-[6px] 1000res:p-[4px] 500res:p-0 pb-4 1580res:pb-3 1000res:pb-2 500res:pb-1 transition-all duration-700 ease-custom-ease'
             style={{ backgroundColor: activeVideoId ? color : 'transparent' }}
         >
             <Link to={type === 'video' ? `/watch?v=${videoId}&t=${time}s` : `playlist?list=${playlistId}`}>
@@ -68,16 +67,15 @@ const CardVideo: React.FC<{item?: VideoItemType; type: string; isLoad?: boolean;
                     ref={myElementRef}
                 >
                     {activeVideoId === videoId && type === 'video' ? (
-                        // <iframe
-                        //     id="yt-video"
-                        //     frameBorder="0"
-                        //     allowFullScreen
-                        //     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        //     referrerPolicy="strict-origin-when-cross-origin"
-                        //     className="w-full h-full z-[2] pointer-events-none"
-                        //     src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&fs=0&disablekb=1`}
-                        // />
-                        <YouTubePlayer videoId={videoId}/>
+                        <iframe
+                            id="yt-video"
+                            frameBorder="0"
+                            allowFullScreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            className="w-full h-full z-[2] pointer-events-none"
+                            src={`https://www.youtube.com/embed/${activeVideoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&fs=0&disablekb=1`}
+                        />
                     ) : (
                         <div className="relative w-full h-full">
                             <img src={item.snippet.thumbnails.high.url} className="w-full h-full object-cover rounded-2xl 1580res:rounded-xl 1000res:rounded-md" alt={item.snippet.title} />
