@@ -30,7 +30,9 @@ export const useMain = () => {
 
         try {
         const moreVideos = await fetchMoreVideos(genre, nextPageToken);
-        setVideoList((prev) => [...prev, ...moreVideos.items]);
+        
+        const newItems = Array.isArray(moreVideos.items) ? moreVideos.items : [];
+        setVideoList((prev) => [...prev, ...newItems]);
         setNextPageToken(moreVideos.nextPageToken || null);
         } catch (err) {
         console.error('Ошибка загрузки видео:', err);
