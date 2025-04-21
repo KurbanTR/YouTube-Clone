@@ -6,7 +6,7 @@ export const genres = [
     { name: 'Подкасты', value: 'podcast'},
     { name: 'Игры', value:'gaming' },
     { name: 'Спорт', value:'sport' },
-    { name: 'Мода', value:'fashion'},
+    { name: 'Repo', value:'fashion'},
     { name: 'Красота', value: 'beauty'},
     { name: 'Комедия', value: 'comedy'},
     { name: 'Gym', value:'gym' },

@@ -1,67 +1,16 @@
-import { useEffect, useState, useCallback } from 'react';
-import { fetchVideos, fetchMoreVideos } from '@/api/searchSlice';
-import { useQuery } from '@tanstack/react-query';
 import CardVideo from '@/others/CardVideo';
-import { useGenres } from '@/hooks/context/genresContext';
-import { throttle } from 'lodash';
-import { VideoItemType, VideoDataType } from '@/types';
 import ErrorPage from './ErrorPage';
+import { useMain } from '@/hooks/api/mainPage';
 
 const MainPage = () => {
-  const { genre } = useGenres();
-  const [videoList, setVideoList] = useState<VideoItemType[]>([]);
-  const [nextPageToken, setNextPageToken] = useState<string | null>(null);
-  const [isFetching, setIsFetching] = useState(false);
+  const { videoList, isLoading, isFetching, isError, error } = useMain()
 
-  const { data, isLoading, isError, error } = useQuery<VideoDataType>({
-    queryKey: ['main', genre],
-    queryFn: () => fetchVideos(genre),
-    refetchOnWindowFocus: false,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setVideoList(data.items);
-      setNextPageToken(data.nextPageToken || null);
-    }
-  }, [data]);
-
-  const loadMoreVideos = useCallback(async () => {
-    if (!nextPageToken || isFetching) return;
-
-    try {
-      const moreVideos = await fetchMoreVideos(genre, nextPageToken);
-      setVideoList((prev) => [...prev, ...moreVideos.items]);
-      setNextPageToken(moreVideos.nextPageToken || null);
-    } catch (err) {
-      console.error('Ошибка загрузки видео:', err);
-    }
-
-    setIsFetching(false);
-  }, [genre, nextPageToken]);
-
-  const throttledLoadMoreVideos = useCallback(throttle(loadMoreVideos, 5000), [loadMoreVideos]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2500 && nextPageToken) {
-        throttledLoadMoreVideos();
-      }
-      if (!nextPageToken) clearInterval(interval);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [nextPageToken, throttledLoadMoreVideos]);
-
-  useEffect(() => {
-    document.title = 'YouTube Clone';
-  }, []);
-
-  if (isError) return <ErrorPage error={error}/>
+  if (isError) return <ErrorPage error={error as { message: string }}/>
 
   return (
     <div className="min-h-screen p-4 500res:px-0">
       <div className="grid grid-cols-6 2230res:grid-cols-5 1900res:grid-cols-4 1580res:grid-cols-3 1000res:grid-cols-2 500res:grid-cols-1 gap-x-[.1vw] gap-y-[.7vw] 1000res:gap-x-[.5vw]  500res:gap-x-0 540res:gap-y-[7vw]">
+        {[...Array(2)].map((_, index) => <CardVideo key={index} type="video" isLoad />)}
         {isLoading
           ? [...Array(32)].map((_, index) => <CardVideo key={index} type="video" isLoad />)
           : videoList.map((item, index) =>

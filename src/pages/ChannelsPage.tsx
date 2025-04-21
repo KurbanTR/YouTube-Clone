@@ -1,51 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { fetchChannelById, fetchChannelVideos } from "../api/searchSlice"; // Используем правильный экспорт
-import {DateFormatter, useNumberFormatter} from "../hooks";
-import { useQuery } from "@tanstack/react-query";
 import CardVideo from "../others/CardVideo";
 import { Modal } from "antd";
 import '../styles/antdModel.css';
-import { ChannelType, VideoItemType } from "@/types";
+import { useChannel } from "@/hooks/api/channelPage";
 
 const ChannelsPage: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const params = useParams<{ id: string }>();
-
-  const { data: channel, isError: isErrorChannel } = useQuery<ChannelType>({
-    queryKey: ['channel', params.id],
-    queryFn: () => fetchChannelById(params.id as string),
-  });
-
-  const { data: channelVideos, isError: isErrorVideos } = useQuery<VideoItemType[]>({
-    queryKey: ['channelVideos', params.id],
-    queryFn: () => fetchChannelVideos(params.id as string),
-  });
-
-  const formattedSubscribers = useNumberFormatter(channel?.statistics?.subscriberCount ?? 0);
-  const formattedViews = useNumberFormatter(channel?.statistics?.viewCount ?? 0);
-  const formattedDate = DateFormatter(channel?.snippet?.publishedAt ?? "");
-
-  useEffect(() => {
-    if (channel) {
-      document.title = `${channel.snippet.title} - YouTube`;
-    } else {
-      document.title = 'Loading...';
-    }
-  }, [channel]);
+  const {channel, isModalOpen, isErrorChannel, channelVideos, isErrorVideos, formattedSubscribers, formattedViews, formattedDate, showModal, handleCancel} = useChannel()
 
   if (isErrorChannel || isErrorVideos) {
     return <div>Error loading data</div>;
   }
-
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
 
   return (
     <div className="w-11/12 m-auto pt-7 700res:pt-2">
