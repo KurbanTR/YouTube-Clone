@@ -10,7 +10,6 @@ const MainPage = () => {
   return (
     <div className="min-h-screen p-4 500res:px-0">
       <div className="grid grid-cols-6 2230res:grid-cols-5 1900res:grid-cols-4 1580res:grid-cols-3 1000res:grid-cols-2 500res:grid-cols-1 gap-x-[.1vw] gap-y-[.7vw] 1000res:gap-x-[.5vw]  500res:gap-x-0 540res:gap-y-[7vw]">
-        {[...Array(2)].map((_, index) => <CardVideo key={index} type="video" isLoad />)}
         {isLoading
           ? [...Array(32)].map((_, index) => <CardVideo key={index} type="video" isLoad />)
           : videoList.map((item, index) =>
