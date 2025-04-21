@@ -19,18 +19,18 @@ export const useMain = () => {
 
     useEffect(() => {
         if (data) {
-            const items = data?.items ?? [];
+            const items = Array.isArray(data.items) ? data.items : [];
             setVideoList(items);
             setNextPageToken(data.nextPageToken || null);
         }
-    }, [data]);
+    }, [data]);    
 
     const loadMoreVideos = useCallback(async () => {
         if (!nextPageToken || isFetching) return;
 
         try {
         const moreVideos = await fetchMoreVideos(genre, nextPageToken);
-        
+
         const newItems = Array.isArray(moreVideos.items) ? moreVideos.items : [];
         setVideoList((prev) => [...prev, ...newItems]);
         setNextPageToken(moreVideos.nextPageToken || null);
