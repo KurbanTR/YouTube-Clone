@@ -11,7 +11,7 @@ import { GenresContext } from '@/hooks/context/genresContext';
 import ErrorPage from './pages/ErrorPage';
 
 const App = () => {
-  const [genre, setGenre] = useState<string>('edisonpts')
+  const [genre, setGenre] = useState<string>('muvtimenk')
   const location = useLocation()
   return (
     <GenresContext.Provider value={{genre, setGenre}}>
